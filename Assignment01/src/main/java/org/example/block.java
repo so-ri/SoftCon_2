@@ -1,33 +1,41 @@
 package org.example;
 
+import org.example.ships.ship;
+import static org.example.blockshiptype.EMPTY;
+import static org.example.blockstate.NOGUESS;
+
 public class block {
+
     /*
-    * possible states for state:
-    * 1 = no guess
-    * 2 = Hit
-    * 3 = Missed
-    * 4 = sunk
+    * public enum blockshiptype {
+    * EMPTY,
+    * CARRIER,
+    * BATTLESHIP,
+    * CRUISER,
+    * SUBMARINE,
+    * DESTROYER
+    * }
     *
-    * possible states for shiptype:
-    * 11 = empty
-    * 12 = carrier
-    * 13 = battleship
-    * 14 = cruiser
-    * 15 = submarine
-    * 16 = destroyer
+    * public enum blockstate {
+    * NOGUESS,
+    * HIT,
+    * MISSED,
+    * SUNK
+    * }
     * */
-    private byte state;
-    private byte shiptype;
+    private blockstate state;
+    private blockshiptype shiptype;
+    private ship shipinstance;
 
     //constructor, first initiation with base cases and else we've got to change them
     public block() {
-        this.state = 1;
-        this.shiptype = 11;
+        this.state = NOGUESS;
+        this.shiptype = EMPTY;
     }
 
     //don't know if this is okay encapsulation-wise or better isEmpty()-checkers, but I think should be okay,
-    //isEmpty() etc. should come in the board class them
-    public byte getShiptype() {
+    //isEmpty() etc. should come in the board class then
+    public blockshiptype getShiptype() {
         return shiptype;
     }
 
@@ -35,11 +43,19 @@ public class block {
         this.shiptype = shiptype;
     }
 
-    public byte getState() {
+    public blockstate getState() {
         return state;
     }
 
-    public void setState(byte state) {
+    public void setState(blockstate state) {
         this.state = state;
+    }
+
+    public ship getShipinstance() {
+        return shipinstance;
+    }
+
+    public void setShipinstance(ship shipinstance) {
+        this.shipinstance = shipinstance;
     }
 }

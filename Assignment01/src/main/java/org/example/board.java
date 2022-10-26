@@ -1,39 +1,89 @@
 package org.example;
 
+//KÖNNEN WIR DAS IN DAS HAUPT-PACKAGE SCHIEBEN?
+import org.example.ships.positionX;
+import org.example.ships.positionY;
+
+import java.util.Objects;
+
+
 public class board {
     /*
-     * possible states for block state:
-     * 1 = no guess
-     * 2 = Hit
-     * 3 = Missed
-     * 4 = sunk
+     * possible types for blockshiptype:
+     * EMPTY,
+     * CARRIER,
+     * BATTLESHIP,
+     * CRUISER,
+     * SUBMARINE,
+     * DESTROYER
      *
-     * possible states for block shiptype:
-     * 11 = empty
-     * 12 = carrier
-     * 13 = battleship
-     * 14 = cruiser
-     * 15 = submarine
-     * 16 = destroyer
+     * possible types for blockstate:
+     * NOGUESS,
+     * HIT,
+     * MISSED,
+     * SUNK
+     *
      * */
-    public block[][] blockarray; //this seems to be Java array declaration according to IntelliJ
-
+    public block[][] blockarray;
     public board(){
         //blockarray iniitierung mit neuen blöcken - OK so? auch mit assertion? die wurde mir vorgeschlagen von IntelliJ
-        for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
+        positionX positionXarray[] = positionX.values(); //helper array of values of enum object to iterate through it
+        positionY positionYarray[] = positionY.values();
+
+        for (positionX xpos: positionXarray) { //iterate through enum objects
+            for (positionY ypos: positionYarray) {
                 assert blockarray != null;
-                blockarray[x][y] = new block();
+                blockarray[xpos.ordinal()][ypos.ordinal()] = new block();
             }
         }
     }
-    public boolean IsEmpty(int x, int y) {
-        return blockarray[x][y].getState() == 11; //returns true if == 11, returns false if != 11
+
+    public void setGuess(positionX x, positionY y) {
+
     }
 
-    //toImplement: gotGuessed, gotMissed, gotHit, isSunk
     // setType, setGuess (this one changes to hit or miss and calls isSunk())
-    // getShipType (or isCruiser etc) -- wait no, it should return the ship object? is this safe?
-    // - HOW DO WE STORE SHIPINFORMATION? DAS MUSS IN DEN BLOCK! DAS MUSS IM BLOCK INSTANZIERT WERDEN?! GEHT NICHT AUF
+    // ShipInstance - is it safe to store it in f.e. 3 blocks? not needed outside of the board, is it?
+
+    //BLOCKSTATE CHECKERS
+    public boolean GotGuessed(positionX x, positionY y) {
+        return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.NOGUESS); //returns true if it has been guessed
+    }
+
+    public boolean GotHit(int x, int y) {
+        return !Objects.equals(blockarray[x][y].getState(), blockstate.HIT); //returns true if it has been hit
+    }
+
+    public boolean GotMissed(int x, int y) {
+        return !Objects.equals(blockarray[x][y].getState(), blockstate.MISSED); //returns true if it has been missed
+    }
+    public boolean GotSunk(int x, int y) {
+        return !Objects.equals(blockarray[x][y].getState(), blockstate.SUNK); //returns true if it has been sunk
+    }
+
+    //SHIPTYPE CHECKERS
+    public boolean IsEmpty(int x, int y) {
+        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.EMPTY); //returns true if == EMPTY, returns false if != EMPTY
+    }
+
+    public boolean IsCarrier(int x, int y) {
+        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.CARRIER);
+    }
+
+    public boolean IsBattleship(int x, int y) {
+        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.BATTLESHIP);
+    }
+
+    public boolean IsCruiser(int x, int y) {
+        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.CRUISER);
+    }
+
+    public boolean IsSubmarine(int x, int y) {
+        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.SUBMARINE);
+    }
+
+    public boolean IsDestroyer(int x, int y) {
+        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.DESTROYER);
+    }
 
 }
