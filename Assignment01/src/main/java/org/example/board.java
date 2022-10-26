@@ -1,6 +1,7 @@
 package org.example;
+import org.example.ships.ship;
 
-//KÖNNEN WIR DAS IN DAS HAUPT-PACKAGE SCHIEBEN?
+//! KÖNNEN WIR DAS IN DAS HAUPT-PACKAGE SCHIEBEN?
 import org.example.ships.positionX;
 import org.example.ships.positionY;
 
@@ -24,7 +25,8 @@ public class board {
      * SUNK
      *
      * */
-    public block[][] blockarray;
+    private byte sunkcounter = 0;
+    private block[][] blockarray;
     public board(){
         //blockarray iniitierung mit neuen blöcken - OK so? auch mit assertion? die wurde mir vorgeschlagen von IntelliJ
         positionX positionXarray[] = positionX.values(); //helper array of values of enum object to iterate through it
@@ -39,51 +41,75 @@ public class board {
     }
 
     public void setGuess(positionX x, positionY y) {
-
+        block block = blockarray[x.ordinal()][y.ordinal()];
+        if (IsEmpty(x, y)) {
+            block.setState(blockstate.MISSED);
+        }
+        else {
+            block.setState(blockstate.HIT);
+            //HERE: tell the ship that it was hit
+            if (block.getShipinstance().isDown()){
+                block.setState(blockstate.SUNK);
+                sunkcounter++;
+            }
+        }
     }
 
-    // setType, setGuess (this one changes to hit or miss and calls isSunk())
-    // ShipInstance - is it safe to store it in f.e. 3 blocks? not needed outside of the board, is it?
+    //! ShipInstance - is it safe to store it in f.e. 3 blocks at the same time? not needed outside of the board, is it?
+
+    //BLOCK MODIFIERS
+    public void setState(positionX x, positionY y, blockstate bs) {
+        block block = blockarray[x.ordinal()][y.ordinal()];
+        block.setState(bs);
+    }
+    public void setShipType(positionX x, positionY y, blockshiptype bst) {
+        block block = blockarray[x.ordinal()][y.ordinal()];
+        block.setShiptype(bst);
+    }
+    public void setState(positionX x, positionY y, ship s) {
+        block block = blockarray[x.ordinal()][y.ordinal()];
+        block.setShipinstance(s);
+    }
 
     //BLOCKSTATE CHECKERS
     public boolean GotGuessed(positionX x, positionY y) {
         return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.NOGUESS); //returns true if it has been guessed
     }
 
-    public boolean GotHit(int x, int y) {
-        return !Objects.equals(blockarray[x][y].getState(), blockstate.HIT); //returns true if it has been hit
+    public boolean GotHit(positionX x, positionY y) {
+        return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.HIT); //returns true if it has been hit
     }
 
-    public boolean GotMissed(int x, int y) {
-        return !Objects.equals(blockarray[x][y].getState(), blockstate.MISSED); //returns true if it has been missed
+    public boolean GotMissed(positionX x, positionY y) {
+        return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.MISSED); //returns true if it has been missed
     }
-    public boolean GotSunk(int x, int y) {
-        return !Objects.equals(blockarray[x][y].getState(), blockstate.SUNK); //returns true if it has been sunk
+    public boolean GotSunk(positionX x, positionY y) {
+        return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.SUNK); //returns true if it has been sunk
     }
 
     //SHIPTYPE CHECKERS
-    public boolean IsEmpty(int x, int y) {
-        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.EMPTY); //returns true if == EMPTY, returns false if != EMPTY
+    public boolean IsEmpty(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.EMPTY); //returns true if == EMPTY, returns false if != EMPTY
     }
 
-    public boolean IsCarrier(int x, int y) {
-        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.CARRIER);
+    public boolean IsCarrier(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.CARRIER);
     }
 
-    public boolean IsBattleship(int x, int y) {
-        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.BATTLESHIP);
+    public boolean IsBattleship(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.BATTLESHIP);
     }
 
-    public boolean IsCruiser(int x, int y) {
-        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.CRUISER);
+    public boolean IsCruiser(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.CRUISER);
     }
 
-    public boolean IsSubmarine(int x, int y) {
-        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.SUBMARINE);
+    public boolean IsSubmarine(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.SUBMARINE);
     }
 
-    public boolean IsDestroyer(int x, int y) {
-        return Objects.equals(blockarray[x][y].getShiptype(), blockshiptype.DESTROYER);
+    public boolean IsDestroyer(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.DESTROYER);
     }
 
 }

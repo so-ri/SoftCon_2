@@ -39,7 +39,7 @@ public class block {
         return shiptype;
     }
 
-    public void setShiptype(byte Shiptype) {
+    public void setShiptype(blockshiptype shiptype) {
         this.shiptype = shiptype;
     }
 
