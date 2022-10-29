@@ -48,7 +48,7 @@ public class input {
 
     }
     public static void createShip(String c1, String c2){
-        
+
     }
     public static boolean isValidShip(String pos1, String pos2){
 
