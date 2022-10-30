@@ -1,7 +1,6 @@
 package org.example;
 import org.example.ships.ship;
 
-//! KÖNNEN WIR DAS IN DAS HAUPT-PACKAGE SCHIEBEN?
 import org.example.ships.positionX;
 import org.example.ships.positionY;
 
@@ -13,10 +12,10 @@ public class board {
      * possible types for blockshiptype:
      * EMPTY,
      * CARRIER,
-     * BATTLESHIP,
-     * CRUISER,
-     * SUBMARINE,
-     * DESTROYER
+     * *BATTLESHIP,
+     * *CRUISER,
+     * *SUBMARINE,
+     * *DESTROYER
      *
      * possible types for blockstate:
      * NOGUESS,
@@ -28,9 +27,8 @@ public class board {
     private byte sunkcounter = 0;
     private block[][] blockarray;
     public board(){
-        //blockarray iniitierung mit neuen blöcken - OK so? auch mit assertion? die wurde mir vorgeschlagen von IntelliJ
-        positionX positionXarray[] = positionX.values(); //helper array of values of enum object to iterate through it
-        positionY positionYarray[] = positionY.values();
+        positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
+        positionY[] positionYarray = positionY.values();
 
         for (positionX xpos: positionXarray) { //iterate through enum objects
             for (positionY ypos: positionYarray) {
@@ -40,6 +38,18 @@ public class board {
         }
     }
 
+    public boolean IsGameOver() {
+        return sunkcounter >= 10;
+    }
+
+    public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
+        // create shipinstance(4 enumerates)
+        // call method which returns an array with all positions
+        // call method shiptype
+        // while-loop opening all blocks, changing shiptype and put in ship instance
+        //
+    }
+
     public void setGuess(positionX x, positionY y) {
         block block = blockarray[x.ordinal()][y.ordinal()];
         if (IsEmpty(x, y)) {
@@ -47,15 +57,14 @@ public class board {
         }
         else {
             block.setState(blockstate.HIT);
-            //HERE: tell the ship that it was hit
+            block.setShiptoHit(x,y);
             if (block.getShipinstance().isDown()){
-                block.setState(blockstate.SUNK);
+                block.setState(blockstate.SUNK); //!MUSS FÜR ALLE BLÖCKE DES SCHIFFS GEMACHT WERDEN
                 sunkcounter++;
             }
         }
     }
 
-    //! ShipInstance - is it safe to store it in f.e. 3 blocks at the same time? not needed outside of the board, is it?
 
     //BLOCK MODIFIERS
     public void setState(positionX x, positionY y, blockstate bs) {
@@ -66,7 +75,9 @@ public class board {
         block block = blockarray[x.ordinal()][y.ordinal()];
         block.setShiptype(bst);
     }
-    public void setState(positionX x, positionY y, ship s) {
+    //! ShipInstance - is it safe to store it in f.e. 3 blocks at the same time?
+    //! ONLY CHANGE SHIPINSTANCE IF IT WAS NOT SET YET
+    public void setShipInstance(positionX x, positionY y, ship s) {
         block block = blockarray[x.ordinal()][y.ordinal()];
         block.setShipinstance(s);
     }
@@ -77,14 +88,14 @@ public class board {
     }
 
     public boolean GotHit(positionX x, positionY y) {
-        return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.HIT); //returns true if it has been hit
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.HIT); //returns true if it has been hit
     }
 
     public boolean GotMissed(positionX x, positionY y) {
-        return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.MISSED); //returns true if it has been missed
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.MISSED); //returns true if it has been missed
     }
     public boolean GotSunk(positionX x, positionY y) {
-        return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.SUNK); //returns true if it has been sunk
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.SUNK); //returns true if it has been sunk
     }
 
     //SHIPTYPE CHECKERS
@@ -100,16 +111,13 @@ public class board {
         return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.BATTLESHIP);
     }
 
-    public boolean IsCruiser(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.CRUISER);
+    public boolean IsPatrol(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.PATROL);
     }
 
     public boolean IsSubmarine(positionX x, positionY y) {
         return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.SUBMARINE);
     }
 
-    public boolean IsDestroyer(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.DESTROYER);
-    }
 
 }
