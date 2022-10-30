@@ -4,7 +4,6 @@ public enum blockshiptype {
     EMPTY,
     CARRIER,
     BATTLESHIP,
-    CRUISER,
+    PATROL,
     SUBMARINE,
-    DESTROYER
 }

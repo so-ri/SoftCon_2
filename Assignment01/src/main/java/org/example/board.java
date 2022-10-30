@@ -1,7 +1,6 @@
 package org.example;
 import org.example.ships.ship;
 
-//! KÖNNEN WIR DAS IN DAS HAUPT-PACKAGE SCHIEBEN?
 import org.example.ships.positionX;
 import org.example.ships.positionY;
 
@@ -28,9 +27,8 @@ public class board {
     private byte sunkcounter = 0;
     private block[][] blockarray;
     public board(){
-        //blockarray iniitierung mit neuen blöcken - OK so? auch mit assertion? die wurde mir vorgeschlagen von IntelliJ
-        positionX positionXarray[] = positionX.values(); //helper array of values of enum object to iterate through it
-        positionY positionYarray[] = positionY.values();
+        positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
+        positionY[] positionYarray = positionY.values();
 
         for (positionX xpos: positionXarray) { //iterate through enum objects
             for (positionY ypos: positionYarray) {
@@ -38,6 +36,10 @@ public class board {
                 blockarray[xpos.ordinal()][ypos.ordinal()] = new block();
             }
         }
+    }
+
+    public boolean IsGameOver() {
+        return sunkcounter >= 10;
     }
 
     public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
@@ -109,16 +111,13 @@ public class board {
         return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.BATTLESHIP);
     }
 
-    public boolean IsCruiser(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.CRUISER);
+    public boolean IsPatrol(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.PATROL);
     }
 
     public boolean IsSubmarine(positionX x, positionY y) {
         return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.SUBMARINE);
     }
 
-    public boolean IsDestroyer(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.DESTROYER);
-    }
 
 }

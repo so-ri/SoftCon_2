@@ -14,9 +14,8 @@ public class block {
     * EMPTY,
     * CARRIER,
     * BATTLESHIP,
-    * CRUISER,
+    * PATROL,
     * SUBMARINE,
-    * DESTROYER
     * }
     *
     * public enum blockstate {
