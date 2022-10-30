@@ -4,8 +4,9 @@ import java.util.Random;
 import java.util.Scanner;
 import org.example.board;
 public class Guess {
-	
+
 	//PRE: Inputs a Position between A1 and H8
+
 	public static String PlayerGuess() {
 		Scanner Input = new Scanner(System.in);
 		String answer = null;
@@ -27,11 +28,13 @@ public class Guess {
 					|| (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
 				System.out.println("Please type in a Position on the Board");
 			}
-
+			/*
 			else if(!ValidShot(pos)) {
 				System.out.println("Please type in a valid Position");
 				
 			}
+			*/
+
 
 			else {
 				i = false;
@@ -39,18 +42,25 @@ public class Guess {
 			}
 		}
 		Input.close();
-		
+
 		/*Sets the guess     UNCOMMENT TO SET IN EFFECT
 		Block.setGuess(answer);
 		Block.setStatus(answer);
 		
 				PROBLEM: Dont know instance of Block if the Position is meant for an
 				instance (e.g Board1)
-		*/
-		return answer;
-	}
-	
 
+
+		return answer;
+<<<<<<< Updated upstream
+	}*/
+	
+=======
+	}
+>>>>>>> Stashed changes
+
+	
+	/*
 	public static boolean ValidShot(String pos) {
 		if(board.GotSunk(pos) || board.GotHit(pos)) {
 			return false;
@@ -58,6 +68,8 @@ public class Guess {
 		else return true;
 		
 	}
+	*/
+
 
 	//PRE: Generates an Input Position between A1 and H8
 	public String ComputerGuess() {
@@ -74,12 +86,18 @@ public class Guess {
 		
 				PROBLEM: Dont know instance of Block if the Position is meant for an
 				instance (e.g Board1)
-		*/
+
 		
 		return Canswer;
 	}
+<<<<<<< Updated upstream
+	*/
 	
 	
+=======
+
 	
+
+>>>>>>> Stashed changes
 
 }

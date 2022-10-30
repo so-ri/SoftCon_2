@@ -1,114 +1,108 @@
 package org.example.ships;
-
+import java.lang.*;
+import org.example.blockshiptype;
+import javax.swing.text.Position;
 import java.util.Arrays;
 
 public class ship {
-    private int len;
+
     private coordinate[] position;
+    private positionX[] X = positionX.values();
+    private positionY[] Y = positionY.values();
+    private int len;
 
-    // positionY[] Y = positionY.values();
-    // positionX[] X = positionX.values();
+    public ship(positionX X1, positionY Y1, positionX X2, positionY Y2){
 
+        //change values in case they are not given in the correct order
 
+        if(X1.ordinal() > X2.ordinal()){
+            positionX temp = X1;
+            X1 = X2;
+            X2 = temp;
+        }
 
-    public ship(String C1, String C2){
-        // Separate Strings to CharArrays to get the values for enum
-        char[] StartPosition = C1.toCharArray();
-        char[] EndPosition = C2.toCharArray();
-        // get the type of the ship and store it in len
-        this.len = getlen(StartPosition, EndPosition);
-        this.position = new coordinate[len];
-        // safe enum values in array
-        positionY[] Y = positionY.values();
-        positionX[] X = positionX.values();
-        //in case of the same X-Coordinates
-        if(StartPosition[0] == EndPosition[0]){
-            //position X safe in a constant variable
-            final int Xconstant = StartPosition[0] - 65;
-            //verbessern mit turnYchar
-            int Yvariable = Character.getNumericValue(StartPosition[1]);
-            for(int i = 0; i < this.len; i++){
-                positionX V1 = X[Xconstant];
-                positionY V2 = Y[Yvariable];
-                state V3 = state.NOTSTRIKED;
-                position[i] = new coordinate(V1,V2,V3);
-                Yvariable += 1;
+        if(Y1.ordinal() > Y2.ordinal()){
+            positionY temp = Y1;
+            Y1 = Y2;
+            Y2 = temp;
+        }
+
+        // vertical boats
+
+        if(X1 == X2){
+            //set length and initialize array position with length
+
+            this.len = Math.abs(Y1.ordinal() - Y2.ordinal())+1;
+            this.position = new coordinate[this.len];
+
+            int positionINDX = 0;
+            for(int i = Y1.ordinal(); i<= Y2.ordinal(); i++){
+                position[positionINDX] = new coordinate(X1, Y[i], state.NOTSTRIKED);
+                positionINDX += 1;
             }
         }
-        if(StartPosition[1] == EndPosition[1]){
-            final int Yconstant = turnYCharToInt(StartPosition[1]);
-            int Xvariable = turnXCharToInt(StartPosition[0]);
-            for(int i = 0; i < this.len; i++){
-                positionX V1 = X[Xvariable];
-                positionY V2 = Y[Yconstant];
-                state V3 = state.NOTSTRIKED;
-                position[i] = new coordinate(V1,V2,V3);
-                Xvariable += 1;
+
+        //horicontal boats
+
+        if(Y1 == Y2){
+            this.len = Math.abs(X1.ordinal() - X2.ordinal())+1;
+            this.position = new coordinate[this.len];
+            int positionINDX = 0;
+            for(int i = X1.ordinal(); i<= X2.ordinal(); i++){
+                position[positionINDX] = new coordinate(X[i], Y1, state.NOTSTRIKED);
+                positionINDX += 1;
             }
         }
     }
 
-    //Funktioniert momentan nur falls Koordinaten von Links (start) nach rechts (ende) (horizontal eingegeben werden)
-    //BZW falls von oben (start) nach unten (ende) (vertikal)
-
-    private int getlen(char[] start, char[] end ){
-        // In Case of same X-Coordinates
-        if(start[0] == end[0]){
-            int Y1 = Character.getNumericValue(start[1]);
-            int Y2 = Character.getNumericValue(end[1]);
-            int length = Y2 - Y1;
-            return length+1;
-        }
-        // In Case of same Y-Coordinates
-        else if(start[1] == end[1]){
-            int X1 = start[0] - 65;
-            int X2 = end[0] - 65;
-            int length = X2 - X1;
-            return length+1;
-        }
-        else {throw new IllegalArgumentException("Ships can only be initialized vertical or horizontal!");}
-    }
-
-    public String getTypeAsString() {
-        if (this.len == 6) {return "Carrier";}
-        else if (this.len == 4) {return "Battleship";}
-        else if (this.len == 3) {return "Submarine";}
-        else if (this.len == 2) {return "Patrol Boat";}
-        else return "invalid Ship";
-    }
-
-    public void hitShip(String Coordinate){
-        char[] Strike = Coordinate.toCharArray();
-        int[] Strikeconverted = new int[2];
-        positionY[] Y = positionY.values();
-        positionX[] X = positionX.values();
-        Strikeconverted[0] = turnXCharToInt(Strike[0]);
-        Strikeconverted[1] = turnYCharToInt(Strike[1]);
-        for(int i = 0; i<this.len ; i++){
-            if(position[i].getX() == X[Strikeconverted[0]] && position[i].getY() == Y[Strikeconverted[1]] ){
-            position[i].hit();
-            System.out.println("Ship has been hit");
+    public void hitShip(positionX X1, positionY Y1){
+        for(coordinate c: position){
+            if(c.getX() == X1 && c.getY() == Y1){
+                c.hit();
+                System.out.println("gothit!");
             }
         }
     }
 
     public Boolean isDown(){
-        int hits = 0;
-        for(int i = 0; i< this.len; i++){
-        if (position[i].ishit()){hits += 1;}
-        if (hits == this.len){boolean a = true; return true;}
+        int numHits = 0;
+        for(coordinate c: position){
+            if (c.ishit()){
+                numHits++;
+            }
         }
-        return false;
+        if (numHits == this.len){
+            return true;
+        }
+        else{return false;}
     }
 
-    private int turnXCharToInt(char c){
-        int i = c - 65;
-        return i;
-    }
-    private int turnYCharToInt(char c){
-        int i = Character.getNumericValue(c);
-        return i;
+    public blockshiptype getShipType(){
+        if (this.len == 2){return blockshiptype.PATROL;}
+        if (this.len == 3){return blockshiptype.SUBMARINE;}
+        if (this.len == 4){return blockshiptype.BATTLESHIP;}
+        if (this.len == 5){return blockshiptype.CARRIER;}
+        else{return blockshiptype.EMPTY;}
     }
 
+    public positionX[] getXcoordinates(){
+        positionX[] X = new positionX[this.len];
+        int idx = 0;
+        for(coordinate c: position){
+            X[idx] = c.getX();
+            idx++;
+        }
+        return X;
+    }
+
+    public positionY[] getYcoordinates(){
+        positionY[] Y = new positionY[this.len];
+        int idx = 0;
+        for(coordinate c: position){
+            Y[idx] = c.getY();
+            idx++;
+        }
+        return Y;
+    }
 
 }

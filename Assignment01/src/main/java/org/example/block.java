@@ -54,11 +54,19 @@ public class block {
     public void setState(blockstate state) {
         this.state = state;
     }
-
-    public void setShiptoHit(positionX x, positionY Y) {
+<<<<<<< Updated upstream
+/*
+    public void setShiptoHit(positionX x, positionY y) {
             shipinstance.hitShip(x, y); //Call muss je nach dem nochmals angepasst werden
     }
-
+*/
+=======
+    /*
+    public void setShiptoHit(positionX x, positionY y) {
+            shipinstance.hitShip(x, y); //Call muss je nach dem nochmals angepasst werden
+    }
+    */
+>>>>>>> Stashed changes
     public ship getShipinstance() {
         ship instancecopy = shipinstance;
         return instancecopy;
