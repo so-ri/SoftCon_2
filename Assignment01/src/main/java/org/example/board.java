@@ -6,16 +6,14 @@ import org.example.ships.positionY;
 
 import java.util.Objects;
 
-
 public class board {
     /*
      * possible types for blockshiptype:
      * EMPTY,
      * CARRIER,
      * *BATTLESHIP,
-     * *CRUISER,
+     * *PATROL,
      * *SUBMARINE,
-     * *DESTROYER
      *
      * possible types for blockstate:
      * NOGUESS,
@@ -36,6 +34,34 @@ public class board {
                 blockarray[xpos.ordinal()][ypos.ordinal()] = new block();
             }
         }
+    }
+
+    public void printOwnBoard() {
+        System.out.println("===== OCEAN GRID =====\n" + "A B C D E F G H I J\n" + "+-+-+-+-+-+-+-+-+-+-+");
+        positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
+        positionY[] positionYarray = positionY.values();
+
+        for (positionY ypos: positionYarray) { //iterate through enum objects, BUT THE Y WAY - horizontally
+            String ToBePrinted = ypos.toString() + "|"; //Prints number of line to the left
+            for (positionX xpos: positionXarray) {
+                block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
+                switch (currentblock.getShiptype()) {
+                    case EMPTY -> ToBePrinted += " |";
+                    case CARRIER -> ToBePrinted += "C|";
+                    case BATTLESHIP -> ToBePrinted += "B|";
+                    case PATROL -> ToBePrinted += "P|";
+                    case SUBMARINE -> ToBePrinted += "S|";
+                }
+                ToBePrinted += ypos.toString() + "\n";
+                System.out.println(ToBePrinted);
+            } // "line" ends
+
+        }
+        System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "A B C D E F G H I J\n");
+    }
+
+    public void printEnemyBoard(){
+
     }
 
     public boolean IsGameOver() {
