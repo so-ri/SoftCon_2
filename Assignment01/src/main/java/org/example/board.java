@@ -43,11 +43,13 @@ public class board {
     }
 
     public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
-        // create shipinstance(4 enumerates)
-        // call method which returns an array with all positions
-        // call method shiptype
-        // while-loop opening all blocks, changing shiptype and put in ship instance
-        //
+        ship ship = new ship(x,y,x2,y2);
+        blockshiptype shiptype = ship.getTypeAsEnumerate(); //cache the shiptype
+        for (Pair<positionX, positionY> pair: ship.getCoordinates()) { // go through all the shipinstance coordinates //requires java tuple module
+            block newshipblock = blockarray[pair.getValue(0).ordinal()][pair.getValue(1).ordinal()]; //find the block with the coordinates
+            newshipblock.setShiptype(shiptype);
+            newshipblock.setShipinstance(ship);
+        }
     }
 
     public void setGuess(positionX x, positionY y) {
@@ -59,7 +61,10 @@ public class board {
             block.setState(blockstate.HIT);
             block.setShiptoHit(x,y);
             if (block.getShipinstance().isDown()){
-                block.setState(blockstate.SUNK); //!MUSS FÜR ALLE BLÖCKE DES SCHIFFS GEMACHT WERDEN
+                for (Pair<positionX, positionY> pair: block.getShipinstance().getCoordinates()) { // go through all the shipinstance coordinates //requires java tuple module
+                    block sunkblock = blockarray[pair.getValue(0).ordinal()][pair.getValue(1).ordinal()]; //find the block with the coordinates
+                    sunkblock.setState(blockstate.SUNK); //set it to sunk
+                }
                 sunkcounter++;
             }
         }
@@ -76,9 +81,9 @@ public class board {
         block.setShiptype(bst);
     }
     //! ShipInstance - is it safe to store it in f.e. 3 blocks at the same time?
-    //! ONLY CHANGE SHIPINSTANCE IF IT WAS NOT SET YET
     public void setShipInstance(positionX x, positionY y, ship s) {
         block block = blockarray[x.ordinal()][y.ordinal()];
+        //ONLY CHANGE SHIPINSTANCE IF IT WAS NOT SET YET - OK wenn ich mache = NULL?
         block.setShipinstance(s);
     }
 

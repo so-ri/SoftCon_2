@@ -55,7 +55,7 @@ public class block {
         this.state = state;
     }
 
-    public void setShiptoHit(positionX x, positionY Y) {
+    public void setShiptoHit(positionX x, positionY y) {
             shipinstance.hitShip(x, y); //Call muss je nach dem nochmals angepasst werden
     }
 
