@@ -46,9 +46,10 @@ public class Guess {
 		
 				PROBLEM: Dont know instance of Block if the Position is meant for an
 				instance (e.g Board1)
-		*/
+
+
 		return answer;
-	}
+	}*/
 	
 
 	public static boolean ValidShot(String pos) {
@@ -74,11 +75,11 @@ public class Guess {
 		
 				PROBLEM: Dont know instance of Block if the Position is meant for an
 				instance (e.g Board1)
-		*/
+
 		
 		return Canswer;
 	}
-	
+	*/
 	
 	
 

@@ -23,14 +23,13 @@ public class board {
      *
      * */
     private byte sunkcounter = 0;
-    private block[][] blockarray;
+    private block[][] blockarray = new block[10][10];
     public board(){
         positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
         positionY[] positionYarray = positionY.values();
 
         for (positionX xpos: positionXarray) { //iterate through enum objects
             for (positionY ypos: positionYarray) {
-                assert blockarray != null;
                 blockarray[xpos.ordinal()][ypos.ordinal()] = new block();
             }
         }
@@ -42,25 +41,56 @@ public class board {
         positionY[] positionYarray = positionY.values();
 
         for (positionY ypos: positionYarray) { //iterate through enum objects, BUT THE Y WAY - horizontally
-            String ToBePrinted = ypos.toString() + "|"; //Prints number of line to the left
+            String ToBePrinted = ypos.ordinal() + "|"; //Prints number of line to the left
             for (positionX xpos: positionXarray) {
                 block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
-                switch (currentblock.getShiptype()) {
-                    case EMPTY -> ToBePrinted += " |";
-                    case CARRIER -> ToBePrinted += "C|";
-                    case BATTLESHIP -> ToBePrinted += "B|";
-                    case PATROL -> ToBePrinted += "P|";
-                    case SUBMARINE -> ToBePrinted += "S|";
+                if (currentblock.getState() != blockstate.NOGUESS)
+                    switch (currentblock.getState()) {
+                        case HIT -> ToBePrinted += "X|";
+                        case MISSED -> ToBePrinted += "o|";
+                        case SUNK -> ToBePrinted += "S|";
                 }
-                ToBePrinted += ypos.toString() + "\n";
-                System.out.println(ToBePrinted);
-            } // "line" ends
+                else {
+                    switch (currentblock.getShiptype()) {
+                        case EMPTY -> ToBePrinted += " |";
+                        case CARRIER -> ToBePrinted += "C|";
+                        case BATTLESHIP -> ToBePrinted += "B|";
+                        case PATROL -> ToBePrinted += "P|";
+                        case SUBMARINE -> ToBePrinted += "S|";
+                    }
+                }
+            }
+            ToBePrinted += ypos.ordinal();
+            System.out.println(ToBePrinted);
+            // "line" ends
 
         }
         System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "A B C D E F G H I J\n");
     }
 
     public void printEnemyBoard(){
+        System.out.println("===== TARGET GRID =====\n" + "A B C D E F G H I J\n" + "+-+-+-+-+-+-+-+-+-+-+");
+        positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
+        positionY[] positionYarray = positionY.values();
+
+        for (positionY ypos: positionYarray) { //iterate through enum objects, BUT THE Y WAY - horizontally
+            String ToBePrinted = ypos.ordinal() + "|"; //Prints number of line to the left
+            for (positionX xpos: positionXarray) {
+                block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
+                    switch (currentblock.getState()) {
+                        case NOGUESS -> ToBePrinted += " |";
+                        case HIT -> ToBePrinted += "X|";
+                        case MISSED -> ToBePrinted += "o|";
+                        case SUNK -> ToBePrinted += "S|";
+                    }
+
+            }
+            ToBePrinted += ypos.ordinal();
+            System.out.println(ToBePrinted);
+            // "line" ends
+
+        }
+        System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "A B C D E F G H I J\n");
 
     }
 
@@ -68,7 +98,7 @@ public class board {
         return sunkcounter >= 10;
     }
 
-    public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
+    /*public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
         ship ship = new ship(x,y,x2,y2);
         blockshiptype shiptype = ship.getTypeAsEnumerate(); //cache the shiptype
         for (Pair<positionX, positionY> pair: ship.getCoordinates()) { // go through all the shipinstance coordinates //requires java tuple module
@@ -95,7 +125,7 @@ public class board {
             }
         }
     }
-
+*/
 
     //BLOCK MODIFIERS
     public void setState(positionX x, positionY y, blockstate bs) {
