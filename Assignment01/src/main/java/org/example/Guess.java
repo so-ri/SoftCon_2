@@ -25,7 +25,7 @@ public class Guess {
 			}
 			else if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
 					|| (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
-				System.out.println("Please type in a correct Position");
+				System.out.println("Please type in a Position on the Board");
 			}
 
 			else if(!ValidShot(pos)) {

@@ -1,6 +1,7 @@
 package org.example;
 import java.util.Scanner;
 import java.util.Random;
+import org.example.ships.*;
 
 
 public class Input {
@@ -105,9 +106,6 @@ public class Input {
                             continue;
                         }
                 }
-
-
-
             }
         }
     }
@@ -129,6 +127,7 @@ public class Input {
     }
     public static void createShip(String c1, String c2, String typus){
         System.out.println(typus +" Ship created from: " + c1 + " to " + c2);
+
     }
     public static boolean isValidShip(String pos1, String pos2, String typus){
         char[] Spos = pos1.toCharArray();
@@ -139,7 +138,7 @@ public class Input {
         }
         if(getlen(Spos,Epos) != isRightShip(typus)) {
             System.out.println("Ship doesnt have proper length");
-            System.out.println(getlen(Spos,Epos));
+
             return false;
         }
 
