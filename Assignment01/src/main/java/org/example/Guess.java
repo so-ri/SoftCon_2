@@ -14,11 +14,17 @@ public class Guess {
 		//Checks if valid input according to PRE-condition
 		System.out.println("Type in new Guess: ");
 		while(i) {
+			//converts String
+			String pos2 = Input.nextLine();
+			String pos1 = pos2.replaceAll("\\s+","");
+			String pos = pos1.toUpperCase();
 
-			String pos = Input.nextLine();
 			//CHECK FOR A10 INPUT WETHER IT WORKS
-			if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
-					|| (int) pos.charAt(1) < 49 || (int) pos.charAt(1) > 57) {
+			if(pos.length()!=2) {
+				System.out.println("Please type in a Position on the Board");
+			}
+			else if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
+					|| (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
 				System.out.println("Please type in a correct Position");
 			}
 
@@ -57,7 +63,7 @@ public class Guess {
 	public String ComputerGuess() {
 		Random rnd = new Random();
 		char P1 = (char) (65 + rnd.nextInt(10));
-		char P2 = (char) ('1' + rnd.nextInt(10));
+		char P2 = (char) ('0' + rnd.nextInt(10));
 
 		
 		String Canswer = P1 + Character.toString(P2);
