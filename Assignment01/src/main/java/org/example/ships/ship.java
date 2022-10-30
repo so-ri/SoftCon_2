@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class ship {
     private int len;
     private coordinate[] position;
+
     // positionY[] Y = positionY.values();
     // positionX[] X = positionX.values();
 

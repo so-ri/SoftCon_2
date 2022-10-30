@@ -2,29 +2,31 @@ package org.example;
 
 import java.util.Random;
 import java.util.Scanner;
+import org.example.board;
 public class Guess {
 	
 	//PRE: Inputs a Position between A1 and H8
-	public String Scan() {
+	public static String PlayerGuess() {
 		Scanner Input = new Scanner(System.in);
 		String answer = null;
 		boolean i = true;
-		
+
 		//Checks if valid input according to PRE-condition
+		System.out.println("Type in new Guess: ");
 		while(i) {
-			System.out.println("Type in Position of new Guess: ");
+
 			String pos = Input.nextLine();
-			if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 72
-					|| (int) pos.charAt(1) < 49 || (int) pos.charAt(1) > 56) {
+			//CHECK FOR A10 INPUT WETHER IT WORKS
+			if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
+					|| (int) pos.charAt(1) < 49 || (int) pos.charAt(1) > 57) {
 				System.out.println("Please type in a correct Position");
 			}
-			/*		UNCOMMENT TO SET IN EFFECT
-			//Check if valid Shot
+
 			else if(!ValidShot(pos)) {
 				System.out.println("Please type in a valid Position");
 				
 			}
-			*/
+
 			else {
 				i = false;
 				answer = pos;	
@@ -42,23 +44,23 @@ public class Guess {
 		return answer;
 	}
 	
-	/*			UNCOMMENT TO SET IN EFFECT
-	//Checks wether Shot is valid
-	private boolean ValidShot(String pos) {
-		if(Board.isSunk(pos) || Board.isHit(pos)) {
+
+	public static boolean ValidShot(String pos) {
+		if(board.GotSunk(pos) || board.GotHit(pos)) {
 			return false;
 		}
 		else return true;
 		
 	}
-	*/
+
 	//PRE: Generates an Input Position between A1 and H8
 	public String ComputerGuess() {
 		Random rnd = new Random();
-		char P1 = (char) (65 + rnd.nextInt(8));
-		char P2 = (char) ('1' + rnd.nextInt(8));
+		char P1 = (char) (65 + rnd.nextInt(10));
+		char P2 = (char) ('1' + rnd.nextInt(10));
+
 		
-		String Canswer = Character.toString(P1) + Character.toString(P2);
+		String Canswer = P1 + Character.toString(P2);
 		
 		/*Sets the guess
 		Block.setGuess(Canswer);
