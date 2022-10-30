@@ -6,7 +6,7 @@ import org.example.board;
 public class Guess {
 	
 	//PRE: Inputs a Position between A1 and H8
-	public static String Scan() {
+	public static String PlayerGuess() {
 		Scanner Input = new Scanner(System.in);
 		String answer = null;
 		boolean i = true;
@@ -16,8 +16,9 @@ public class Guess {
 		while(i) {
 
 			String pos = Input.nextLine();
-			if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 72
-					|| (int) pos.charAt(1) < 49 || (int) pos.charAt(1) > 56) {
+			//CHECK FOR A10 INPUT WETHER IT WORKS
+			if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
+					|| (int) pos.charAt(1) < 49 || (int) pos.charAt(1) > 57) {
 				System.out.println("Please type in a correct Position");
 			}
 
@@ -55,10 +56,11 @@ public class Guess {
 	//PRE: Generates an Input Position between A1 and H8
 	public String ComputerGuess() {
 		Random rnd = new Random();
-		char P1 = (char) (65 + rnd.nextInt(8));
-		char P2 = (char) ('1' + rnd.nextInt(8));
+		char P1 = (char) (65 + rnd.nextInt(10));
+		char P2 = (char) ('1' + rnd.nextInt(10));
+
 		
-		String Canswer = Character.toString(P1) + Character.toString(P2);
+		String Canswer = P1 + Character.toString(P2);
 		
 		/*Sets the guess
 		Block.setGuess(Canswer);
