@@ -9,6 +9,18 @@ public class Input {
             "first Submarine", "second Submarine","third Submarine", "first Patrolboat",
             "second Patrolboat", "third Patrolboat", "fourth Patrolboat"};
     public static void ScanPlayerShips(board Playerboard){
+        /*
+        Playerboard.createShip(positionX.A, positionY.ZERO, positionX.A, positionY.SIX);
+        Playerboard.createShip(positionX.B, positionY.ZERO, positionX.B, positionY.FOUR);
+        Playerboard.createShip(positionX.B, positionY.FIVE, positionX.B, positionY.NINE);
+        Playerboard.createShip(positionX.C, positionY.ZERO, positionX.C, positionY.THREE);
+        Playerboard.createShip(positionX.C, positionY.FOUR, positionX.C, positionY.SEVEN);
+        Playerboard.createShip(positionX.D, positionY.ZERO, positionX.D, positionY.THREE);
+        Playerboard.createShip(positionX.D, positionY.FOUR, positionX.D, positionY.SIX);
+        Playerboard.createShip(positionX.D, positionY.SEVEN, positionX.D, positionY.NINE);
+        Playerboard.createShip(positionX.E, positionY.ZERO, positionX.E, positionY.TWO);
+        Playerboard.createShip(positionX.E, positionY.THREE, positionX.E, positionY.FIVE);
+        */
         for (int i = 0; i < Ships.length; i++) {
             boolean e = true;
             while(e) {
