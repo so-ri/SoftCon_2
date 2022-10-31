@@ -21,6 +21,8 @@ public class Game {
         board computerBoard = new board();
         printlogo.BSlogo();
 
+        computerBoard.printEnemyBoard();
+        System.out.println("-----------------------\n");
         playerBoard.printOwnBoard();
 
         Input.ScanComputerShips(computerBoard);
@@ -33,7 +35,6 @@ public class Game {
         //Random int (0 or 1) to decide who starts
 
         int randomNum = ThreadLocalRandom.current().nextInt(1, 2);
-
 
 
         computerBoard.printOwnBoard();//HERE SHOULD BE PRINT ENEMY BOARD
@@ -51,6 +52,7 @@ public class Game {
             }
 
             computerBoard.printEnemyBoard();
+            System.out.println("-----------------------\n");
             playerBoard.printOwnBoard();
         }
 
