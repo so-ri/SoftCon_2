@@ -148,6 +148,7 @@ public class Input {
             System.out.println("Ship cant be diagonal");
             return false;
         }
+        //NOT WHEN COMPUTER DOES IT
         if(getlen(Spos,Epos) != isRightShip(typus)) {
             System.out.println("Ship doesnt have proper length");
 
