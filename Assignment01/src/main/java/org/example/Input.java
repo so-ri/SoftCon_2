@@ -13,10 +13,10 @@ public class Input {
             boolean e = true;
             while(e) {
                 String msg = "Type in first Position of " + Ships[i];
-                String pos1 = Shipscan(msg);
+                String pos1 = Shipscan(msg, Playerboard);
 
                 String msg2 = "Typ in second Position of " + Ships[i];
-                String pos2 = Shipscan(msg2);
+                String pos2 = Shipscan(msg2, Playerboard);
 
                 if(isValidShip(pos1,pos2, Ships[i])) {
                     createShip(pos1,pos2, Ships[i], Playerboard);
@@ -146,7 +146,7 @@ public class Input {
         positionX x2 = Guess.translateX(pos2);
         positionY y2 = Guess.translateY(pos2);
 
-        
+
         /*
         for(int i = 0; i<leng; ++i) {
 
@@ -158,7 +158,7 @@ public class Input {
         return true;
 
     }
-    public static String Shipscan(String msg) {
+    public static String Shipscan(String msg, board Board1) {
         Scanner Input = new Scanner(System.in);
         String answer = null;
         boolean i = true;
@@ -176,7 +176,7 @@ public class Input {
                 System.out.println("Please type in a Position on the Board");
             }
 
-            else if(!Guess.ValidShot(pos)) {
+            else if(!Guess.ValidShot(pos, Board1)) {
                 System.out.println("Please type in a valid Position");
             }
 
