@@ -99,10 +99,11 @@ public class board {
         return sunkcounter >= 10;
     }
 
-/*
+
     public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
         ship ship = new ship(x,y,x2,y2);
-        blockshiptype shiptype = ship.getTypeAsEnumerate(); //cache the shiptype
+        assert ship.getShipType() != blockshiptype.EMPTY;
+        blockshiptype shiptype = ship.getShipType(); //cache the shiptype
         for (Pair<positionX, positionY> pair: ship.getCoordinates()) { // go through all the shipinstance coordinates //requires java tuple module
             block newshipblock = blockarray[pair.getValue(0).ordinal()][pair.getValue(1).ordinal()]; //find the block with the coordinates
             newshipblock.setShiptype(shiptype);
@@ -118,7 +119,7 @@ public class board {
         else {
             block.setState(blockstate.HIT);
             block.setShiptoHit(x,y);
-            if (block.getShipinstance().isDown()){
+            if (block.getShipinstance().isDown()){ // !ARRAY IMPLEMENTIEREN
                 for (Pair<positionX, positionY> pair: block.getShipinstance().getCoordinates()) { // go through all the shipinstance coordinates //requires java tuple module
                     block sunkblock = blockarray[pair.getValue(0).ordinal()][pair.getValue(1).ordinal()]; //find the block with the coordinates
                     sunkblock.setState(blockstate.SUNK); //set it to sunk
@@ -127,7 +128,7 @@ public class board {
             }
         }
     }
-*/
+
 
     //BLOCK MODIFIERS
     public void setState(positionX x, positionY y, blockstate bs) {
@@ -141,7 +142,10 @@ public class board {
     //! ShipInstance - is it safe to store it in f.e. 3 blocks at the same time?
     public void setShipInstance(positionX x, positionY y, ship s) {
         block block = blockarray[x.ordinal()][y.ordinal()];
-        //ONLY CHANGE SHIPINSTANCE IF IT WAS NOT SET YET - OK wenn ich mache = NULL?
+        System.out.println(this.IsEmpty(x, y));
+        if (this.IsEmpty(x, y) == false) {
+            throw new IllegalArgumentException("Schiffsinstanz wurde bereits gesetzt");
+        }
         block.setShipinstance(s);
     }
 
