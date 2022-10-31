@@ -18,7 +18,7 @@ public class Input {
                 String msg2 = "Typ in second Position of " + Ships[i];
                 String pos2 = Shipscan(msg2, Playerboard);
 
-                if(isValidShip(pos1,pos2, Ships[i])) {
+                if(isValidShip(pos1,pos2, Ships[i], Playerboard)) {
                     createShip(pos1,pos2, Ships[i], Playerboard);
                     e = false;
                 }
@@ -50,7 +50,7 @@ public class Input {
                         if(!onBoard(pos2)) {
                             continue;
                         }
-                        else if(isValidShip(pos1, pos2, Ships[i])) {
+                        else if(isValidShip(pos1, pos2, Ships[i], Computerboard)) {
                             createShip(pos1, pos2, Ships[i], Computerboard);
                             e = false;
                             break;
@@ -65,7 +65,7 @@ public class Input {
                         if(!onBoard(pos2)) {
                             continue;
                         }
-                        else if(isValidShip(pos1, pos2, Ships[i])) {
+                        else if(isValidShip(pos1, pos2, Ships[i], Computerboard)) {
                             createShip(pos1, pos2, Ships[i], Computerboard);
                             e = false;
                             break;
@@ -81,7 +81,7 @@ public class Input {
                         if(!onBoard(pos2)) {
                             continue;
                         }
-                        else if(isValidShip(pos1, pos2, Ships[i])) {
+                        else if(isValidShip(pos1, pos2, Ships[i], Computerboard)) {
                             createShip(pos1, pos2, Ships[i], Computerboard);
                             e = false;
                             break;
@@ -97,7 +97,7 @@ public class Input {
                         if(!onBoard(pos2)) {
                             continue;
                         }
-                        else if(isValidShip(pos1, pos2, Ships[i])) {
+                        else if(isValidShip(pos1, pos2, Ships[i], Computerboard)) {
                             createShip(pos1, pos2, Ships[i], Computerboard);
                             e = false;
                             break;
@@ -129,7 +129,7 @@ public class Input {
         shipboard.createShip(x1,y1,x2,y2);
 
     }
-    public static boolean isValidShip(String pos1, String pos2, String typus){
+    public static boolean isValidShip(String pos1, String pos2, String typus, board board2){
         char[] Spos = pos1.toCharArray();
         char[] Epos = pos2.toCharArray();
         if(!(Spos[0]==Epos[0]||Spos[1]==Epos[1])) {
@@ -146,15 +146,15 @@ public class Input {
         positionX x2 = Guess.translateX(pos2);
         positionY y2 = Guess.translateY(pos2);
 
+        ship test = new ship(x1,y1,x2,y2);
+        positionX[] xes = test.getXcoordinates();
+        positionY[] yes = test.getYcoordinates();
+        for(int i = 0; i < xes.length; ++i) {
+            if(!board2.IsEmpty(xes[0], yes[0])) {
+                return false;
 
-        /*
-        for(int i = 0; i<leng; ++i) {
-
-            board.IsEmpty(Spos, Epos);
             }
-        }*/
-
-
+        }
         return true;
 
     }
@@ -188,7 +188,7 @@ public class Input {
 
         return answer;
     }
-    //!!! Samuel kann funktion pubic machen
+
     private static int getlen(char[] start, char[] end ){
         // In Case of same X-Coordinates
         if(start[0] == end[0]){
