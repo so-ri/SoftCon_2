@@ -57,7 +57,7 @@ public class Input {
                 switch(dir) {
                     case 0:
                         len = isRightShip(Ships[i]);
-                        F1 = (char) ((int) P1 - len);
+                        F1 = (char) ((int) P1 - len-1);
                         pos2 = F1 + Character.toString(P2);
                         if(!onBoard(pos2)) {
                             continue;
@@ -72,7 +72,7 @@ public class Input {
                         }
                     case 1:
                         len = isRightShip(Ships[i]);
-                        F1 = (char) ((int) P1 + len);
+                        F1 = (char) ((int) P1 + len-1);
                         pos2 = F1 + Character.toString(P2);
                         if(!onBoard(pos2)) {
                             continue;
@@ -88,7 +88,7 @@ public class Input {
 
                     case 2:
                         len = isRightShip(Ships[i]);
-                        F2 = (char) ((int) P2 + len);
+                        F2 = (char) ((int) P2 + len-1);
                         pos2 = P1 + Character.toString(F2);
                         if(!onBoard(pos2)) {
                             continue;
@@ -104,7 +104,7 @@ public class Input {
 
                     case 3:
                         len = isRightShip(Ships[i]);
-                        F2 = (char) ((int) P2 - len);
+                        F2 = (char) ((int) P2 - len-1);
                         pos2 = P1 + Character.toString(F2);
                         if(!onBoard(pos2)) {
                             continue;
@@ -162,7 +162,8 @@ public class Input {
         positionX[] xes = test.getXcoordinates();
         positionY[] yes = test.getYcoordinates();
         for(int i = 0; i < xes.length; ++i) {
-            if(!board2.IsEmpty(xes[0], yes[0])) {
+            // i not 0
+            if(!board2.IsEmpty(xes[i], yes[i])) {
                 return false;
 
             }
@@ -208,14 +209,14 @@ public class Input {
             int Y2 = Character.getNumericValue(end[1]);
             int length = Math.abs(Y2-Y1);
 
-            return length;
+            return length+1;
         }
         // In Case of same Y-Coordinates
         else if(start[1] == end[1]){
             int X1 = start[0] - 65;
             int X2 = end[0] - 65;
             int length = Math.abs(X2-X1);
-            return length;
+            return length+1;
         }
         else {throw new IllegalArgumentException("Ships can only be initialized vertical or horizontal!");}
     }
