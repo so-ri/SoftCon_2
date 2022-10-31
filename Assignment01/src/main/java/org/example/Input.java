@@ -8,7 +8,7 @@ public class Input {
     static final String Ships[] = {"Carrier", "first Battleship", "second Battleship",
             "first Submarine", "second Submarine","third Submarine", "first Patrolboat",
             "second Patrolboat", "third Patrolboat", "fourth Patrolboat"};
-    public static void ScanPlayerShips(){
+    public static void ScanPlayerShips(board Playerboard){
         for (int i = 0; i < Ships.length; i++) {
             boolean e = true;
             while(e) {
@@ -19,7 +19,7 @@ public class Input {
                 String pos2 = Shipscan(msg2);
 
                 if(isValidShip(pos1,pos2, Ships[i])) {
-                    createShip(pos1,pos2, Ships[i]);
+                    createShip(pos1,pos2, Ships[i], Playerboard);
                     e = false;
                 }
                 else {
@@ -28,7 +28,7 @@ public class Input {
             }
         }
     }
-    public static void ScanComputerShips() {
+    public static void ScanComputerShips(board Computerboard) {
         Random rnd = new Random();
         int len;
         char F1;
@@ -51,7 +51,7 @@ public class Input {
                             continue;
                         }
                         else if(isValidShip(pos1, pos2, Ships[i])) {
-                            createShip(pos1, pos2, Ships[i]);
+                            createShip(pos1, pos2, Ships[i], Computerboard);
                             e = false;
                             break;
                         }
@@ -66,7 +66,7 @@ public class Input {
                             continue;
                         }
                         else if(isValidShip(pos1, pos2, Ships[i])) {
-                            createShip(pos1, pos2, Ships[i]);
+                            createShip(pos1, pos2, Ships[i], Computerboard);
                             e = false;
                             break;
                         }
@@ -82,7 +82,7 @@ public class Input {
                             continue;
                         }
                         else if(isValidShip(pos1, pos2, Ships[i])) {
-                            createShip(pos1, pos2, Ships[i]);
+                            createShip(pos1, pos2, Ships[i], Computerboard);
                             e = false;
                             break;
                         }
@@ -98,7 +98,7 @@ public class Input {
                             continue;
                         }
                         else if(isValidShip(pos1, pos2, Ships[i])) {
-                            createShip(pos1, pos2, Ships[i]);
+                            createShip(pos1, pos2, Ships[i], Computerboard);
                             e = false;
                             break;
                         }
@@ -109,15 +109,8 @@ public class Input {
             }
         }
     }
-    /*
-    public static void placeComputerShips(board computerBoard){
-        //place computers ships
-    }
 
-    public static void placePlayerShips(board playerBoard){
 
-    }
-    */
     public static boolean onBoard(String pos) {
         if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
                 || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
@@ -125,9 +118,15 @@ public class Input {
         }
         else return true;
     }
-    public static void createShip(String c1, String c2, String typus){
+    public static void createShip(String c1, String c2, String typus, board shipboard){
         System.out.println(typus +" Ship created from: " + c1 + " to " + c2);
+        positionX x1 = Guess.translateX(c1);
+        positionY y1 = Guess.translateY(c1);
 
+        positionX x2 = Guess.translateX(c2);
+        positionY y2 = Guess.translateY(c2);
+
+        shipboard.createShip(x1,y1,x2,y2);
 
     }
     public static boolean isValidShip(String pos1, String pos2, String typus){
@@ -142,15 +141,19 @@ public class Input {
 
             return false;
         }
+        positionX x1 = Guess.translateX(pos1);
+        positionY y1 = Guess.translateY(pos1);
+        positionX x2 = Guess.translateX(pos2);
+        positionY y2 = Guess.translateY(pos2);
 
-
-        /*      !!!!! How to translete in enum && block checkers not static
+        
+        /*
         for(int i = 0; i<leng; ++i) {
 
             board.IsEmpty(Spos, Epos);
             }
-        }
-        */
+        }*/
+
 
         return true;
 
