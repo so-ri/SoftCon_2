@@ -59,7 +59,7 @@ public class ship {
         for(coordinate c: position){
             if(c.getX() == X1 && c.getY() == Y1){
                 c.hit();
-                System.out.println("gothit!");
+                
             }
         }
     }
