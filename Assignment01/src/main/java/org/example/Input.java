@@ -171,11 +171,11 @@ public class Input {
                     || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
                 System.out.println("Please type in a Position on the Board");
             }
-            /*		!!!!UNLOCK and translate String to enum
+
             else if(!Guess.ValidShot(pos)) {
                 System.out.println("Please type in a valid Position");
             }
-            */
+
             else {
                 i = false;
                 answer = pos;
