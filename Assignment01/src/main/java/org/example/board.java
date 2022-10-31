@@ -123,10 +123,12 @@ public class board {
         block block = blockarray[x.ordinal()][y.ordinal()];
         if (IsEmpty(x, y)) {
             block.setState(blockstate.MISSED);
+            System.out.println("SHOT WAS MISSED");
         }
         else {
             block.setState(blockstate.HIT);
             block.setShiptoHit(x,y);
+            System.out.println("SHOT WAS HIT");
 
             //get ship and shipinstance coordinates to set it to sunk if it is down
             if (block.getShipinstance().isDown()){
@@ -137,6 +139,7 @@ public class board {
                     block sunkblock = blockarray[xcoordinates[idx].ordinal()][ycoordinates[idx].ordinal()]; //find the block with the coordinates
                     sunkblock.setState(blockstate.SUNK); //set it to sunk
                 }
+                System.out.println("SHIP GOT SUNK");
                 sunkcounter++;
             }
         }
