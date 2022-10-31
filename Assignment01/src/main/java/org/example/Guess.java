@@ -55,7 +55,7 @@ public class Guess {
     }
 
     public static positionY translateY(String min) {
-        int C2 = (int) min.charAt(1);
+        int C2 = Character.getNumericValue(min.charAt(1));
         positionY[] V2 = positionY.values();
         positionY y1 = V2[C2];
         return y1;

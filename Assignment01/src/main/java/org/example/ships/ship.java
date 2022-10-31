@@ -77,11 +77,11 @@ public class ship {
         else{return false;}
     }
 
-    public blockshiptype getShipType(){
+    public blockshiptype getShipType(){ //
         if (this.len == 2){return blockshiptype.PATROL;}
         if (this.len == 3){return blockshiptype.SUBMARINE;}
         if (this.len == 4){return blockshiptype.BATTLESHIP;}
-        if (this.len == 5){return blockshiptype.CARRIER;}
+        if (this.len == 6){return blockshiptype.CARRIER;}
         else{return blockshiptype.EMPTY;}
     }
 

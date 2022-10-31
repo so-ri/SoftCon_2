@@ -31,23 +31,26 @@ public class Game {
 
         //Random int (0 or 1) to decide who starts
 
-        int randomNum = ThreadLocalRandom.current().nextInt(0, 2);
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 2);
 
 
 
+        computerBoard.printOwnBoard();
+        playerBoard.printOwnBoard();
 
         while (!computerBoard.IsGameOver() && !playerBoard.IsGameOver()) {
 
             if (randomNum == 1) {
-                Guess.PlayerGuess(playerBoard);
-                Guess.ComputerGuess(computerBoard);
+                Guess.PlayerGuess(computerBoard);
+                Guess.ComputerGuess(playerBoard);
             }
             if (randomNum == 2) {
-                Guess.ComputerGuess(computerBoard);
-                Guess.PlayerGuess(playerBoard);
+                Guess.ComputerGuess(playerBoard);
+                Guess.PlayerGuess(computerBoard);
             }
 
-
+            computerBoard.printOwnBoard();
+            playerBoard.printOwnBoard();
         }
     }
 }

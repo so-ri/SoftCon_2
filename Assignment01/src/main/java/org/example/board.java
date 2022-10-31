@@ -37,7 +37,7 @@ public class board {
     }
 
     public void printOwnBoard() {
-        System.out.println("===== OCEAN GRID =====\n" + "A B C D E F G H I J\n" + "+-+-+-+-+-+-+-+-+-+-+");
+        System.out.println("===== OCEAN GRID =====\n" + "  A B C D E F G H I J\n" + "+-+-+-+-+-+-+-+-+-+-+");
         positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
         positionY[] positionYarray = positionY.values();
 
@@ -49,7 +49,7 @@ public class board {
                     switch (currentblock.getState()) {
                         case HIT -> ToBePrinted += "X|";
                         case MISSED -> ToBePrinted += "o|";
-                        case SUNK -> ToBePrinted += "S|";
+                        case SUNK -> ToBePrinted += "s|";
                 }
                 else {
                     switch (currentblock.getShiptype()) {
@@ -66,11 +66,11 @@ public class board {
             // "line" ends
 
         }
-        System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "A B C D E F G H I J\n");
+        System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "  A B C D E F G H I J\n");
     }
 
     public void printEnemyBoard(){
-        System.out.println("===== TARGET GRID =====\n" + "A B C D E F G H I J\n" + "+-+-+-+-+-+-+-+-+-+-+");
+        System.out.println("===== TARGET GRID =====\n" + "  A B C D E F G H I J\n" + "+-+-+-+-+-+-+-+-+-+-+");
         positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
         positionY[] positionYarray = positionY.values();
 
@@ -91,7 +91,7 @@ public class board {
             // "line" ends
 
         }
-        System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "A B C D E F G H I J\n");
+        System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "  A B C D E F G H I J\n");
 
     }
 
@@ -105,7 +105,11 @@ public class board {
         positionX[] xcoordinates = ship.getXcoordinates();
         positionY[] ycoordinates = ship.getYcoordinates();
 
-        assert ship.getShipType() != blockshiptype.EMPTY;
+        if (ship.getShipType() == blockshiptype.EMPTY) {
+            throw new IllegalArgumentException("BLOCKSHIPTYPE IST EMPTY, VMTL STIMMT BLOCKSHIPTYPE NICHT");
+        }
+
+        //assert ship.getShipType() != blockshiptype.EMPTY;
         blockshiptype shiptype = ship.getShipType(); //cache the shiptype
 
         for (byte idx = 0; idx < xcoordinates.length; idx++) { // go through all the shipinstance coordinates
