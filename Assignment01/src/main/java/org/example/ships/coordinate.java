@@ -32,5 +32,11 @@ public class coordinate {
         else{return false;}
     }
 
+    public void print(){
+        System.out.println(this.CX);
+        System.out.println(this.CY);
+        System.out.println(this.State);
+    }
+
 
 }

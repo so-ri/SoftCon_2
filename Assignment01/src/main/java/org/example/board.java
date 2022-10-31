@@ -22,8 +22,14 @@ public class board {
      * SUNK
      *
      * */
+
     private byte sunkcounter = 0;
+<<<<<<< Updated upstream
     private block[][] blockarray = new block[10][10];
+=======
+    /*
+    private block[][] blockarray;
+>>>>>>> Stashed changes
     public board(){
         positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
         positionY[] positionYarray = positionY.values();
@@ -93,12 +99,17 @@ public class board {
         System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "A B C D E F G H I J\n");
 
     }
-
+    */
     public boolean IsGameOver() {
         return sunkcounter >= 10;
     }
 
+<<<<<<< Updated upstream
     /*public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
+=======
+    /*
+    public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
+>>>>>>> Stashed changes
         ship ship = new ship(x,y,x2,y2);
         blockshiptype shiptype = ship.getTypeAsEnumerate(); //cache the shiptype
         for (Pair<positionX, positionY> pair: ship.getCoordinates()) { // go through all the shipinstance coordinates //requires java tuple module
@@ -180,5 +191,5 @@ public class board {
         return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.SUBMARINE);
     }
 
-
+    */
 }
