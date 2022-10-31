@@ -27,7 +27,7 @@ public class block {
     * */
     private blockstate state;
     private blockshiptype shiptype;
-    private ship shipinstance;
+    private ship shipinstance = null;
 
     //constructor, first initiation with base cases and else we've got to change them
     public block() {
@@ -54,19 +54,11 @@ public class block {
     public void setState(blockstate state) {
         this.state = state;
     }
-<<<<<<< Updated upstream
-/*
+
     public void setShiptoHit(positionX x, positionY y) {
-            shipinstance.hitShip(x, y); //Call muss je nach dem nochmals angepasst werden
+            shipinstance.hitShip(x, y);
     }
-*/
-=======
-    /*
-    public void setShiptoHit(positionX x, positionY y) {
-            shipinstance.hitShip(x, y); //Call muss je nach dem nochmals angepasst werden
-    }
-    */
->>>>>>> Stashed changes
+
     public ship getShipinstance() {
         ship instancecopy = shipinstance;
         return instancecopy;
