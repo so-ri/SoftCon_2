@@ -9,7 +9,7 @@ public class Input {
             "first Submarine", "second Submarine","third Submarine", "first Patrolboat",
             "second Patrolboat", "third Patrolboat", "fourth Patrolboat"};
     public static void ScanPlayerShips(board Playerboard){
-
+/*
         Playerboard.createShip(positionX.A, positionY.ZERO, positionX.A, positionY.FIVE);
         Playerboard.createShip(positionX.B, positionY.ZERO, positionX.B, positionY.THREE);
         Playerboard.createShip(positionX.B, positionY.FIVE, positionX.B, positionY.EIGHT);
@@ -20,7 +20,7 @@ public class Input {
         Playerboard.createShip(positionX.D, positionY.SEVEN, positionX.D, positionY.EIGHT);
         Playerboard.createShip(positionX.E, positionY.ZERO, positionX.E, positionY.ONE);
         Playerboard.createShip(positionX.E, positionY.THREE, positionX.E, positionY.FOUR);
-        /*
+        */
         for (int i = 0; i < Ships.length; i++) {
             boolean e = true;
             while(e) {
@@ -38,7 +38,7 @@ public class Input {
                     System.out.println("Invalid input, try again");
                 }
             }
-        }*/
+        }
     }
     public static void ScanComputerShips(board Computerboard) {
         Random rnd = new Random();

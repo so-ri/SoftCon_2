@@ -21,6 +21,7 @@ public class Game {
         board computerBoard = new board();
         printlogo.BSlogo();
 
+        playerBoard.printOwnBoard();
 
         Input.ScanComputerShips(computerBoard);
         Input.ScanPlayerShips(playerBoard);
@@ -49,8 +50,19 @@ public class Game {
                 Guess.PlayerGuess(computerBoard);
             }
 
-            computerBoard.printOwnBoard();
+            computerBoard.printEnemyBoard();
             playerBoard.printOwnBoard();
+        }
+
+        if (playerBoard.IsGameOver()) {
+            System.out.println("Computer won. This is how the boats were:");
+            computerBoard.printOwnBoard();
+            printlogo.BSlogo();
+        }
+
+        if (computerBoard.IsGameOver()) {
+            System.out.println("player won");
+            printlogo.BSlogo();
         }
     }
 }

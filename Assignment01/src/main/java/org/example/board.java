@@ -82,7 +82,7 @@ public class board {
                         case NOGUESS -> ToBePrinted += " |";
                         case HIT -> ToBePrinted += "X|";
                         case MISSED -> ToBePrinted += "o|";
-                        case SUNK -> ToBePrinted += "S|";
+                        case SUNK -> ToBePrinted += "s|";
                     }
 
             }
