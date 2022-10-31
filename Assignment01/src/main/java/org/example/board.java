@@ -99,13 +99,17 @@ public class board {
         return sunkcounter >= 10;
     }
 
-
     public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
+
         ship ship = new ship(x,y,x2,y2);
+        positionX[] xcoordinates = ship.getXcoordinates();
+        positionY[] ycoordinates = ship.getYcoordinates();
+
         assert ship.getShipType() != blockshiptype.EMPTY;
         blockshiptype shiptype = ship.getShipType(); //cache the shiptype
-        for (Pair<positionX, positionY> pair: ship.getCoordinates()) { // go through all the shipinstance coordinates //requires java tuple module
-            block newshipblock = blockarray[pair.getValue(0).ordinal()][pair.getValue(1).ordinal()]; //find the block with the coordinates
+
+        for (byte idx = 0; idx < xcoordinates.length; idx++) { // go through all the shipinstance coordinates
+            block newshipblock = blockarray[xcoordinates[idx].ordinal()][ycoordinates[idx].ordinal()]; //find the block with the coordinates
             newshipblock.setShiptype(shiptype);
             newshipblock.setShipinstance(ship);
         }
@@ -119,9 +123,14 @@ public class board {
         else {
             block.setState(blockstate.HIT);
             block.setShiptoHit(x,y);
-            if (block.getShipinstance().isDown()){ // !ARRAY IMPLEMENTIEREN
-                for (Pair<positionX, positionY> pair: block.getShipinstance().getCoordinates()) { // go through all the shipinstance coordinates //requires java tuple module
-                    block sunkblock = blockarray[pair.getValue(0).ordinal()][pair.getValue(1).ordinal()]; //find the block with the coordinates
+
+            //get ship and shipinstance coordinates to set it to sunk if it is down
+            if (block.getShipinstance().isDown()){
+                ship shipinstance = block.getShipinstance();
+                positionX[] xcoordinates = shipinstance.getXcoordinates();
+                positionY[] ycoordinates = shipinstance.getYcoordinates();
+                for (byte idx = 0; idx < xcoordinates.length; idx++) { // go through all the shipinstance coordinates
+                    block sunkblock = blockarray[xcoordinates[idx].ordinal()][ycoordinates[idx].ordinal()]; //find the block with the coordinates
                     sunkblock.setState(blockstate.SUNK); //set it to sunk
                 }
                 sunkcounter++;
