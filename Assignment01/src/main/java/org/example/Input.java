@@ -128,6 +128,7 @@ public class Input {
     public static void createShip(String c1, String c2, String typus){
         System.out.println(typus +" Ship created from: " + c1 + " to " + c2);
 
+
     }
     public static boolean isValidShip(String pos1, String pos2, String typus){
         char[] Spos = pos1.toCharArray();
