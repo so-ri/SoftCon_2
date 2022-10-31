@@ -36,7 +36,7 @@ public class Game {
 
 
 
-        computerBoard.printOwnBoard();
+        computerBoard.printOwnBoard();//HERE SHOULD BE PRINT ENEMY BOARD
         playerBoard.printOwnBoard();
 
         while (!computerBoard.IsGameOver() && !playerBoard.IsGameOver()) {
