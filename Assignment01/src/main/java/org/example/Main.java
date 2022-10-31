@@ -5,12 +5,7 @@ import org.example.ships.ship;
 
 public class Main {
     public static void main(String[] args) {
-<<<<<<< Updated upstream
 
-=======
-        Game G1 = Game.getInstance();
-        G1.start();
->>>>>>> Stashed changes
     }
  }
 
