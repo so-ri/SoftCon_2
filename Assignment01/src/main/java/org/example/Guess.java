@@ -60,7 +60,7 @@ public class Guess {
         positionY y1 = V2[C2];
         return y1;
     }
-
+ 
 
     public static boolean ValidShot(String pos, board shotboard) {
         positionX x3 = translateX(pos);
