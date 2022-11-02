@@ -8,7 +8,7 @@ public class Game {
     private Game() {
     }
 
-    public static Game getInstance() {
+    public static synchronized Game getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new Game();
         }
