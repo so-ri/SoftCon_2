@@ -8,22 +8,22 @@ import org.example.ships.positionY;
 
 public class Guess {
 
-    //PRE: Inputs a Position between A1 and H8
-
+    //Takes a guess input from user and verifies it
+    //PRE: must be an empty position on the board
     public static void PlayerGuess(board playerBoard) {
         Scanner Input = new Scanner(System.in);
         String answer = null;
         boolean i = true;
-
-        //Checks if valid input according to PRE-condition
         System.out.println("Type in new Guess: ");
+
         while (i) {
-            //converts String
             String pos2 = Input.nextLine();
+
+            //adjusts typed in position
             String pos1 = pos2.replaceAll("\\s+", "");
             String pos = pos1.toUpperCase();
 
-
+            //Checks if valid input according to PRE-condition
             if (pos.length() != 2) {
                 System.out.println("Please type in a Position on the Board");
             } else if ((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
@@ -38,15 +38,13 @@ public class Guess {
             }
         }
 
+        //converts string position to enum and places the guess
         positionX x1 = translateX(answer);
         positionY y1 = translateY(answer);
-
-
         playerBoard.setGuess(x1, y1);
-
-
     }
 
+    //translates the alphabetic part of String position to enum
     public static positionX translateX(String min) {
         int C1 = (int) min.charAt(0) - 65;
         positionX[] V1 = positionX.values();
@@ -54,6 +52,7 @@ public class Guess {
         return x1;
     }
 
+    //translates the numeric part of String position to enum
     public static positionY translateY(String min) {
         int C2 = Character.getNumericValue(min.charAt(1));
         positionY[] V2 = positionY.values();
@@ -61,30 +60,39 @@ public class Guess {
         return y1;
     }
 
-
+    //Validates a given guess
     public static boolean ValidShot(String pos, board shotboard) {
         positionX x3 = translateX(pos);
         positionY y3 = translateY(pos);
 
+        //Checks whether block has already been hit
         if (shotboard.GotSunk(x3, y3) || shotboard.GotHit(x3, y3)) {
             return false;
         } else return true;
     }
 
 
-    //PRE: Generates an Input Position between A1 and H8
+    //Generates a random guess
     public static void ComputerGuess(board Cboard) {
-
+        boolean i = true;
         Random rnd = new Random();
-        char P1 = (char) (65 + rnd.nextInt(10));
-        char P2 = (char) ('0' + rnd.nextInt(10));
+        String Canswer = null;
 
+        //Generates random positions until a valid one has been found
+        while(i) {
+            char P1 = (char) (65 + rnd.nextInt(10));
+            char P2 = (char) ('0' + rnd.nextInt(10));
+            String temp = P1 + Character.toString(P2);
 
-        String Canswer = P1 + Character.toString(P2);
+            if(ValidShot(temp, Cboard)) {
+                Canswer = temp;
+                i = false;
+            }
+        }
 
+        //converts string position to enum and sets guess
         positionX x2 = translateX(Canswer);
         positionY y2 = translateY(Canswer);
-
         Cboard.setGuess(x2, y2);
     }
 }
