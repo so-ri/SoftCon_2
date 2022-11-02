@@ -21,14 +21,17 @@ public class Input {
         Playerboard.createShip(positionX.E, positionY.ZERO, positionX.E, positionY.ONE);
         Playerboard.createShip(positionX.E, positionY.THREE, positionX.E, positionY.FOUR);
         */
+
         for (int i = 0; i < Ships.length; i++) {
             boolean e = true;
             while(e) {
-                String msg = "Type in first Position of " + Ships[i];
-                String pos1 = Shipscan(msg, Playerboard);
+                String msg = "Type in Position of " + Ships[i];
+                String scan = Shipscan(msg, Playerboard);
 
-                String msg2 = "Typ in second Position of " + Ships[i];
-                String pos2 = Shipscan(msg2, Playerboard);
+                String pos1 = scan.substring(0,2);
+                String pos2 = scan.substring(3);
+
+
 
                 if(isValidShip(pos1,pos2, Ships[i], Playerboard)) {
                     createShip(pos1,pos2, Ships[i], Playerboard);
@@ -172,6 +175,7 @@ public class Input {
         return true;
 
     }
+    /*
     public static String Shipscan(String msg, board Board1) {
         Scanner Input = new Scanner(System.in);
         String answer = null;
@@ -193,13 +197,46 @@ public class Input {
             else if(!Guess.ValidShot(pos, Board1)) {
                 System.out.println("Please type in a valid Position");
             }
-
             else {
                 i = false;
                 answer = pos;
             }
         }
+        return answer;
+    }*/
 
+    public static String Shipscan(String msg, board Board1) {
+        Scanner Input = new Scanner(System.in);
+        String answer = null;
+        boolean i = true;
+        //Checks if valid input according to PRE-condition
+        System.out.println(msg);
+        while(i) {
+            String pos2 = Input.nextLine();
+            String pos1 = pos2.replaceAll("\\s+","");
+            String pos = pos1.toUpperCase();
+            if(!pos.contains(",")) {
+                System.out.println("Positions need to be seperated by a coma");
+            }
+            else if(pos.length()!=5) {
+                System.out.println("Please type in a Position on the Board");
+            }
+            else if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
+                    || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
+                System.out.println("Please type in a Position on the Board");
+            }
+            else if((int) pos.charAt(3) < 65 || (int) pos.charAt(3) > 74
+                    || (int) pos.charAt(4) < 48 || (int) pos.charAt(4) > 57) {
+                System.out.println("Please type in a Position on the Board");
+            }
+            else if(!(Guess.ValidShot(pos.substring(0,2), Board1))||!(Guess.ValidShot(pos.substring(3), Board1))) {
+                System.out.println("Please type in a valid Position");
+            }
+            else {
+                i = false;
+                answer = pos;
+            }
+        }
         return answer;
     }
 
