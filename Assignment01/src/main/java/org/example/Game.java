@@ -4,6 +4,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Game {
     private static Game uniqueInstance;
 
+    //Random int (0 or 1) to decide who starts
+    private int randomNum = ThreadLocalRandom.current().nextInt(1, 2);
+
     //Singleton implementation of game class
     private Game() {
     }
@@ -32,21 +35,16 @@ public class Game {
         //input.placePlayerShips(playerBoard);
 
 
-        //Random int (0 or 1) to decide who starts
-
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 2);
-
-
         computerBoard.printOwnBoard();//HERE SHOULD BE PRINT ENEMY BOARD
         playerBoard.printOwnBoard();
 
         while (!computerBoard.IsGameOver() && !playerBoard.IsGameOver()) {
 
-            if (randomNum == 1) {
+            if (this.randomNum == 1) {
                 Guess.PlayerGuess(computerBoard);
                 Guess.ComputerGuess(playerBoard);
             }
-            if (randomNum == 2) {
+            if (this.randomNum == 2) {
                 Guess.ComputerGuess(playerBoard);
                 Guess.PlayerGuess(computerBoard);
             }

@@ -27,11 +27,10 @@ public class ship {
             Y2 = temp;
         }
 
-        // vertical boats
+        // vertical ships
 
         if(X1 == X2){
-            //set length and initialize array position with length
-
+            //get length and initialize array position (filled with coordinates) with length
             this.len = Math.abs(Y1.ordinal() - Y2.ordinal())+1;
             this.position = new coordinate[this.len];
 
@@ -42,7 +41,7 @@ public class ship {
             }
         }
 
-        //horicontal boats
+        //horizontal ships
 
         if(Y1 == Y2){
             this.len = Math.abs(X1.ordinal() - X2.ordinal())+1;
@@ -56,10 +55,10 @@ public class ship {
     }
 
     public void hitShip(positionX X1, positionY Y1){
+        //search for the coordinate which is going to be hit
         for(coordinate c: position){
             if(c.getX() == X1 && c.getY() == Y1){
                 c.hit();
-
             }
         }
     }
@@ -104,5 +103,4 @@ public class ship {
         }
         return Y;
     }
-
 }
