@@ -9,6 +9,8 @@ public class Input {
     static final String Ships[] = {"Carrier", "first Battleship", "second Battleship",
             "first Submarine", "second Submarine","third Submarine", "first Patrolboat",
             "second Patrolboat", "third Patrolboat", "fourth Patrolboat"};
+
+    //Takes input from the user for ship creation
     public static void ScanPlayerShips(board Playerboard){
         /*
         Playerboard.createShip(positionX.A, positionY.ZERO, positionX.A, positionY.FIVE);
@@ -23,70 +25,72 @@ public class Input {
         Playerboard.createShip(positionX.E, positionY.THREE, positionX.E, positionY.FOUR);
         */
 
+
         for (int i = 0; i < Ships.length; i++) {
             boolean e = true;
             while(e) {
-                String msg = "Type in Position of " + Ships[i];
+
+                //Takes user input
+                String msg = "Type in Positions of " + Ships[i];
+                if(i==0) msg = msg  + " seperated by a comma (e.g. A0,A5)";
                 String scan = Shipscan(msg, Playerboard);
 
+                //divide input into positions
                 String pos1 = scan.substring(0,2);
                 String pos2 = scan.substring(3);
 
+                //Validation and creation of sips
                 if(isValidShip(pos1,pos2, Ships[i], Playerboard)) {
-                    createShip(pos1,pos2, Ships[i], Playerboard);
+                    createShip(pos1,pos2, Playerboard);
                     e = false;
                 }
-                else {
-                    System.out.println("Invalid input, try again");
-                }
+
             }
         }
     }
-
+    //Generates random ships for the computer
     public static void ScanComputerShips(board Computerboard) {
         Random rnd = new Random();
         ComputerIsScanning = true;
         int len;
-        char F1;
-        char F2;
+        char F1, F2;
         String pos2;
+
+        //Iterates through ships for creation
         for (int i = 0; i < Ships.length; i++) {
             boolean e = true;
+
+            //Computer generates a random ship on the board, once a valid one has been found it will
+            //be created and the while loop breaks
             while(e) {
                 char P1 = (char) (65 + rnd.nextInt(10));
                 char P2 = (char) ('0' + rnd.nextInt(10));
                 String pos1 = P1 + Character.toString(P2);
+                len = isRightShip(Ships[i]);
 
+                //random number to decide whether ship will be vertical or horizontal
                 int dir = rnd.nextInt(2);
-                    if(dir == 0) {
-                        len = isRightShip(Ships[i]);
-                        F1 = (char) ((int) P1 + len - 1);
-                        pos2 = F1 + Character.toString(P2);
-                        if (onBoard(pos2) && isValidShip(pos1, pos2, Ships[i], Computerboard)) {
-                            createShip(pos1, pos2, Ships[i], Computerboard);
-                            e = false;
-                            break;
-                        }
+                if(dir == 0) {
+                    F1 = (char) ((int) P1 + len - 1);
+                    pos2 = F1 + Character.toString(P2);
+                }
+                else {
+                    F2 = (char) ((int) P2 + len - 1);
+                    pos2 = P1 + Character.toString(F2);
+                }
 
-
-                    }
-                    else {
-                        len = isRightShip(Ships[i]);
-                        F2 = (char) ((int) P2 + len - 1);
-                        pos2 = P1 + Character.toString(F2);
-
-                        if (onBoard(pos2) && isValidShip(pos1, pos2, Ships[i], Computerboard)) {
-                            createShip(pos1, pos2, Ships[i], Computerboard);
-                            e = false;
-                            break;
-                        }
-                    }
+                //Ship validation and possible creation
+                if(onBoard(pos2) && isValidShip(pos1, pos2, Ships[i], Computerboard)) {
+                    createShip(pos1, pos2, Computerboard);
+                    e = false;
+                    break;
+                }
             }
         }
         ComputerIsScanning = false;
     }
 
-
+    //Checks if a given input position is on the board
     public static boolean onBoard(String pos) {
         if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
                 || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
@@ -94,53 +98,66 @@ public class Input {
         }
         else return true;
     }
-    public static void createShip(String c1, String c2, String typus, board shipboard){
-        System.out.println(typus +" Ship created from: " + c1 + " to " + c2);
+
+    //creates ship
+    public static void createShip(String c1, String c2, board shipboard){
+        if(!ComputerIsScanning) System.out.println("Ship created from: " + c1 + " to " + c2);
+
+        //converts string positions into enum
         positionX x1 = Guess.translateX(c1);
         positionY y1 = Guess.translateY(c1);
-
         positionX x2 = Guess.translateX(c2);
         positionY y2 = Guess.translateY(c2);
 
         shipboard.createShip(x1,y1,x2,y2);
 
     }
+
+    //Validates Ship
     public static boolean isValidShip(String pos1, String pos2, String typus, board board2){
         char[] Spos = pos1.toCharArray();
         char[] Epos = pos2.toCharArray();
+
+        //Checks for length and diagonals
         if(!(Spos[0]==Epos[0]||Spos[1]==Epos[1])) {
             System.out.println("Ship cant be diagonal");
             return false;
         }
-        //NOT WHEN COMPUTER DOES IT
         if(getlen(Spos,Epos) != isRightShip(typus)) {
-            if(!ComputerIsScanning) System.out.println("Ship doesnt have proper length");
+            if(!ComputerIsScanning) System.out.println("Ship doesnt have proper length, " + typus
+            + " must be of length " + isRightShip(typus));
             return false;
         }
 
+        //translate string into enum
         positionX x1 = Guess.translateX(pos1);
         positionY y1 = Guess.translateY(pos1);
         positionX x2 = Guess.translateX(pos2);
         positionY y2 = Guess.translateY(pos2);
 
+        //creates dummy ship to get all block coordinates
         ship test = new ship(x1,y1,x2,y2);
         positionX[] xes = test.getXcoordinates();
         positionY[] yes = test.getYcoordinates();
+
+        //Checks if all blocks are empty
         for(int i = 0; i < xes.length; ++i) {
             if(!board2.IsEmpty(xes[i], yes[i])) {
+                if(!ComputerIsScanning) System.out.println("Ships must not overlap with each other");
                 return false;
             }
         }
         return true;
     }
 
-
+    //Takes and verifies user input
     public static String Shipscan(String msg, board Board1) {
         Scanner Input = new Scanner(System.in);
         String answer = null;
         boolean i = true;
-        //Checks if valid input according to PRE-condition
         System.out.println(msg);
+
+        //Checks if valid input according to game rules
         while(i) {
             String pos2 = Input.nextLine();
             String pos1 = pos2.replaceAll("\\s+","");
@@ -149,18 +166,21 @@ public class Input {
                 System.out.println("Positions need to be seperated by a coma");
             }
             else if(pos.length()!=5) {
-                System.out.println("Please type in a Position on the Board");
+                System.out.println("Invalid input");
             }
             else if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
                     || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
-                System.out.println("Please type in a Position on the Board");
+                System.out.println(pos.substring(0,2) + " is not on the board, type in valid positions");
             }
             else if((int) pos.charAt(3) < 65 || (int) pos.charAt(3) > 74
                     || (int) pos.charAt(4) < 48 || (int) pos.charAt(4) > 57) {
-                System.out.println("Please type in a Position on the Board");
+                System.out.println(pos.substring(3) + " is not on the board, type in valid positions");
             }
-            else if(!(Guess.ValidShot(pos.substring(0,2), Board1))||!(Guess.ValidShot(pos.substring(3), Board1))) {
-                System.out.println("Please type in a valid Position");
+            else if(!(Guess.ValidShot(pos.substring(0,2), Board1))) {
+                System.out.println(pos.substring(0,2) + "is not a valid shot");
+            }
+            else if(!(Guess.ValidShot(pos.substring(3), Board1))) {
+                System.out.println(pos.substring(3) + "is not a valid shot");
             }
             else {
                 i = false;
@@ -170,6 +190,7 @@ public class Input {
         return answer;
     }
 
+    //Returns distance between two positions (horizontally or vertically)
     private static int getlen(char[] start, char[] end ){
         // In Case of same X-Coordinates
         if(start[0] == end[0]){
@@ -189,6 +210,7 @@ public class Input {
         else {throw new IllegalArgumentException("Ships can only be initialized vertical or horizontal!");}
     }
 
+    //Returns length of a given shiptype
     private static int isRightShip(String typeofShip){
         int leng = 0;
         if(typeofShip == "Carrier") leng = 6;
