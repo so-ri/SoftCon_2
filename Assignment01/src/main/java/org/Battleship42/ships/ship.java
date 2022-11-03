@@ -1,6 +1,6 @@
-package org.example.ships;
+package org.Battleship42.ships;
 import java.lang.*;
-import org.example.blockshiptype;
+import org.Battleship42.blockshiptype;
 
 public class ship {
 

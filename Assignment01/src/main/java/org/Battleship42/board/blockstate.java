@@ -1,4 +1,4 @@
-package org.example;
+package org.Battleship42.board;
 
 public enum blockstate {
     NOGUESS,

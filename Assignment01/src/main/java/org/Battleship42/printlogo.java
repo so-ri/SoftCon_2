@@ -1,4 +1,4 @@
-package org.example;
+package org.Battleship42;
 
 public class printlogo {
     public static void BSlogo(){

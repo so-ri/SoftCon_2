@@ -1,4 +1,6 @@
-package org.example;
+package org.Battleship42.gameflow;
+import org.Battleship42.printlogo;
+
 import java.util.Random;
 
 public class Game {

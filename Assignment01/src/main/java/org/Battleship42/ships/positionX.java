@@ -1,4 +1,4 @@
-package org.example.ships;
+package org.Battleship42.ships;
 
 public enum positionX {
     A,

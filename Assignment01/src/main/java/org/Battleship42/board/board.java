@@ -1,7 +1,7 @@
-package org.example;
-import org.example.ships.ship;
-import org.example.ships.positionX;
-import org.example.ships.positionY;
+package org.Battleship42;
+import org.Battleship42.ships.ship;
+import org.Battleship42.ships.positionX;
+import org.Battleship42.ships.positionY;
 
 import java.util.Objects;
 

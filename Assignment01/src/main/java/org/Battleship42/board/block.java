@@ -1,10 +1,10 @@
-package org.example;
+package org.Battleship42.board;
 
-import org.example.ships.positionX;
-import org.example.ships.positionY;
-import org.example.ships.ship;
-import static org.example.blockshiptype.EMPTY;
-import static org.example.blockstate.NOGUESS;
+import org.Battleship42.ships.positionX;
+import org.Battleship42.ships.positionY;
+import org.Battleship42.ships.ship;
+import static org.Battleship42.blockshiptype.EMPTY;
+import static org.Battleship42.blockstate.NOGUESS;
 
 /*
 * block classes are being stored in the board class.

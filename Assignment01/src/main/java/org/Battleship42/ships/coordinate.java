@@ -1,4 +1,4 @@
-package org.example.ships;
+package org.Battleship42.ships;
 
 /*
 * helps the ship class to store its coordinates and takes shiphits
