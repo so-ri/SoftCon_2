@@ -143,8 +143,8 @@ public class board {
             System.out.println("SHOT WAS MISSED");
         }
         else {
-            block.setState(blockstate.HIT);
             block.setShiptoHit(x,y);
+            block.setState(blockstate.HIT);
             System.out.println("SHOT WAS HIT");
 
             //get ship and shipinstance coordinates to set it to sunk if it is down
