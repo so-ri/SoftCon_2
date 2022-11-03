@@ -41,7 +41,7 @@ public class block {
     public block(block block){
         this.state = block.state;
         this.shiptype = block.shiptype;
-        if (block.shipinstance != null) {
+        if (block.shipinstance != null) { //copies ONLY coordinates. is fine for current usage, isDown can't be applied to the new shipinstance copy!!!!
             this.shipinstance = new ship(block.shipinstance.getXcoordinates()[0], block.shipinstance.getYcoordinates()[0],
                     block.shipinstance.getXcoordinates()[block.shipinstance.getXcoordinates().length-1], block.shipinstance.getYcoordinates()[block.shipinstance.getYcoordinates().length-1]);
         }
@@ -83,4 +83,9 @@ public class block {
         assert (this.shipinstance == null); //assertion - shipinstance should not be set twice
         this.shipinstance = shipinstance;
     }
+
+    public boolean isShipDown(){
+        return shipinstance.isDown();
+    }
+
 }

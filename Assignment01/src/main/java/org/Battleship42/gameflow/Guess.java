@@ -41,7 +41,7 @@ public class Guess {
         //converts string position to enum and places the guess
         positionX x1 = translateX(answer);
         positionY y1 = translateY(answer);
-        playerBoard.setGuess(x1, y1);
+        playerBoard.setGuess(x1, y1, "Player Guess: ");
     }
 
     //translates the alphabetic part of String position to enum
@@ -89,7 +89,7 @@ public class Guess {
         //converts string position to enum and sets guess
         positionX x2 = translateX(Canswer);
         positionY y2 = translateY(Canswer);
-        Cboard.setGuess(x2, y2);
+        Cboard.setGuess(x2, y2, "Computer Guess: ");
     }
 }
 		

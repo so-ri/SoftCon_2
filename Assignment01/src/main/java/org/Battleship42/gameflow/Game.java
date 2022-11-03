@@ -40,7 +40,7 @@ public class Game {
         Input.ScanPlayerShips(playerBoard);
 
         //print the "filled" boards for the first time
-        computerBoard.printOwnBoard();//HERE SHOULD BE PRINT ENEMY BOARD
+        computerBoard.printEnemyBoard();//CHANGE HERE TO CHEAT/UNCHEAT
         playerBoard.printOwnBoard();
 
         //this while loop controls the game flow and takes the guesses. It ends if either of the boards is > 10.

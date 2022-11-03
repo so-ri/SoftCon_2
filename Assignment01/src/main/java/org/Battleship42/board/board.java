@@ -85,7 +85,6 @@ public class board {
             StringBuilder ToBePrinted = new StringBuilder(ypos.ordinal() + "|"); //puts number of line to the left. Using ToBePrinted as a StringBuilder
             for (positionX xpos: positionXarray) {
                 block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
-                System.out.println(currentblock.getState());
                 if (currentblock.getState() == blockstate.SUNK) { //if currentblock was hit, it can have the following types that should be shown
                     printHelperShiptype(ToBePrinted, currentblock);
                 }
@@ -146,21 +145,21 @@ public class board {
     }
 
     //PRE: block.getstate() == NOGUESS
-    public void setGuess(positionX x, positionY y) {
+    public void setGuess(positionX x, positionY y, String s) {
         block block = blockarray[x.ordinal()][y.ordinal()]; //get the guessed block and then modify it
         assert block.getState() == blockstate.NOGUESS; //assertion to check for precondition
 
         if (IsEmpty(x, y)) {
             block.setState(blockstate.MISSED);
-            System.out.println("SHOT WAS MISSED");
+            System.out.println(s+"SHOT WAS MISSED");
         }
         else {
             block.setShiptoHit(x,y);
             block.setState(blockstate.HIT);
-            System.out.println("SHOT WAS HIT");
+            System.out.println(s+"SHOT WAS HIT");
 
             //get ship and shipinstance coordinates to set it to sunk if it is down
-            if (block.getShipinstance().isDown()){
+            if (block.isShipDown()){
                 ship shipinstance = block.getShipinstance();
                 positionX[] xcoordinates = shipinstance.getXcoordinates();
                 positionY[] ycoordinates = shipinstance.getYcoordinates();
