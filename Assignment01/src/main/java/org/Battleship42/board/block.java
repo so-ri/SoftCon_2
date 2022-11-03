@@ -74,7 +74,7 @@ public class block {
             assert(state == NOGUESS); //it can't be hit "twice"
             shipinstance.hitShip(x, y);
     }
-    public ship getShipinstance() {
+    public ship getShipinstanceCopy() {
         block blockcopy = new block(this); //copy them to not give the calling class a chance to modify the values
         return blockcopy.shipinstance;
     }

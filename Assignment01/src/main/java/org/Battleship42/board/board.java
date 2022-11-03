@@ -160,7 +160,7 @@ public class board {
 
             //get ship and shipinstance coordinates to set it to sunk if it is down
             if (block.isShipDown()){
-                ship shipinstance = block.getShipinstance();
+                ship shipinstance = block.getShipinstanceCopy();
                 positionX[] xcoordinates = shipinstance.getXcoordinates();
                 positionY[] ycoordinates = shipinstance.getYcoordinates();
                 for (byte idx = 0; idx < xcoordinates.length; idx++) { // go through all the shipinstance coordinates
