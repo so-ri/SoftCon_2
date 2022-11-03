@@ -6,13 +6,13 @@ import org.example.ships.*;
 
 public class Input {
     static boolean ComputerIsScanning = false;
-    static final String Ships[] = {"Carrier", "first Battleship", "second Battleship",
+    static final String[] Ships = {"Carrier", "first Battleship", "second Battleship",
             "first Submarine", "second Submarine","third Submarine", "first Patrolboat",
             "second Patrolboat", "third Patrolboat", "fourth Patrolboat"};
 
     //Takes input from the user for ship creation
     public static void ScanPlayerShips(board Playerboard){
-        /*
+        /* //test input for testing purposes
         Playerboard.createShip(positionX.A, positionY.ZERO, positionX.A, positionY.FIVE);
         Playerboard.createShip(positionX.B, positionY.ZERO, positionX.B, positionY.THREE);
         Playerboard.createShip(positionX.B, positionY.FIVE, positionX.B, positionY.EIGHT);
@@ -24,7 +24,6 @@ public class Input {
         Playerboard.createShip(positionX.E, positionY.ZERO, positionX.E, positionY.ONE);
         Playerboard.createShip(positionX.E, positionY.THREE, positionX.E, positionY.FOUR);
         */
-
 
         for (int i = 0; i < Ships.length; i++) {
             boolean e = true;
@@ -57,33 +56,31 @@ public class Input {
         String pos2;
 
         //Iterates through ships for creation
-        for (int i = 0; i < Ships.length; i++) {
+        for (String ship : Ships) {
             boolean e = true;
 
             //Computer generates a random ship on the board, once a valid one has been found it will
             //be created and the while loop breaks
-            while(e) {
+            while (e) {
                 char P1 = (char) (65 + rnd.nextInt(10));
                 char P2 = (char) ('0' + rnd.nextInt(10));
                 String pos1 = P1 + Character.toString(P2);
-                len = isRightShip(Ships[i]);
+                len = isRightShip(ship);
 
                 //random number to decide whether ship will be vertical or horizontal
                 int dir = rnd.nextInt(2);
-                if(dir == 0) {
+                if (dir == 0) {
                     F1 = (char) ((int) P1 + len - 1);
                     pos2 = F1 + Character.toString(P2);
-                }
-                else {
+                } else {
                     F2 = (char) ((int) P2 + len - 1);
                     pos2 = P1 + Character.toString(F2);
                 }
 
                 //Ship validation and possible creation
-                if(onBoard(pos2) && isValidShip(pos1, pos2, Ships[i], Computerboard)) {
+                if (onBoard(pos2) && isValidShip(pos1, pos2, ship, Computerboard)) {
                     createShip(pos1, pos2, Computerboard);
                     e = false;
-                    break;
                 }
             }
         }
@@ -92,11 +89,8 @@ public class Input {
 
     //Checks if a given input position is on the board
     public static boolean onBoard(String pos) {
-        if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
-                || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
-            return false;
-        }
-        else return true;
+        return (int) pos.charAt(0) >= 65 && (int) pos.charAt(0) <= 74
+                && (int) pos.charAt(1) >= 48 && (int) pos.charAt(1) <= 57;
     }
 
     //creates ship
@@ -213,7 +207,7 @@ public class Input {
     //Returns length of a given shiptype
     private static int isRightShip(String typeofShip){
         int leng = 0;
-        if(typeofShip == "Carrier") leng = 6;
+        if(typeofShip.contains("Carrier")) leng = 6;
         else if(typeofShip.contains("Battleship")) leng = 4;
         else if(typeofShip.contains("Submarine")) leng = 3;
         else if(typeofShip.contains("Patrol")) leng = 2;

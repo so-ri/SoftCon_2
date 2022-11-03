@@ -10,5 +10,5 @@ public enum positionY {
     SIX,
     SEVEN,
     EIGHT,
-    NINE;
+    NINE
 }

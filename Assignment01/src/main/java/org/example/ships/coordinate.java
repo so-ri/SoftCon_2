@@ -1,5 +1,8 @@
 package org.example.ships;
 
+/*
+* helps the ship class to store its coordinates and takes shiphits
+* */
 public class coordinate {
     private final positionY CY;
     private final positionX CX;
@@ -26,10 +29,7 @@ public class coordinate {
     }
 
     public Boolean ishit(){
-        if(this.State == state.STRIKED){
-            return true;
-        }
-        else{return false;}
+        return this.State == state.STRIKED;
     }
 
 }
