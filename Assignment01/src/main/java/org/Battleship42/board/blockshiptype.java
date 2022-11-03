@@ -1,4 +1,4 @@
-package org.Battleship42;
+package org.Battleship42.board;
 
 public enum blockshiptype {
     EMPTY,
