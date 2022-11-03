@@ -35,11 +35,22 @@ public class block {
     public block() {
         this.state = NOGUESS;
         this.shiptype = EMPTY;
+
+    }
+
+    //copy constructor to respect encapsulation. deep copy of shipinstance
+    public block(block block){
+        this.state = block.state;
+        this.shiptype = block.shiptype;
+        this.shipinstance = new ship(block.shipinstance.getXcoordinates()[0],block.shipinstance.getYcoordinates()[0], block.shipinstance.getXcoordinates()[block.shipinstance.getXlength()], block.shipinstance.getYcoordinates()[block.shipinstance.getYlength()]);
+    }
+
+    private void blockcopy() {
     }
 
     public blockshiptype getShiptype() {
-        blockshiptype shiptypecopy = shiptype; //copy them to not give the calling class a chance to modify the values
-        return shiptypecopy;
+        block blockcopy = new block(this); //copy them to not give the calling class a chance to modify the values
+        return blockcopy.shiptype;
     }
 
     public void setShiptype(blockshiptype shiptype) {
@@ -48,8 +59,8 @@ public class block {
     }
 
     public blockstate getState() {
-        blockstate blockstatecopy = state;
-        return blockstatecopy;
+        block blockcopy = new block(this); //copy them to not give the calling class a chance to modify the values
+        return blockcopy.state;
     }
 
     public void setState(blockstate state) {
