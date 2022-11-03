@@ -61,8 +61,8 @@ public class block {
     }
 
     public blockstate getState() {
-        block blockcopy = new block(this); //copy them to not give the calling class a chance to modify the values
-        return blockcopy.state;
+        //block blockcopy = new block(this); //copy them to not give the calling class a chance to modify the values
+        return this.state;
     }
 
     public void setState(blockstate state) {

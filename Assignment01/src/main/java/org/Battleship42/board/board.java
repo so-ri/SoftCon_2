@@ -39,13 +39,13 @@ public class board {
         return sunkcounter >= 10;
     }
     /*
-    * two print methods for either showing the board for the player or the one the enemy sees
-    */
+     * two print methods for either showing the board for the player or the one the enemy sees
+     */
     public void printOwnBoard() {
         System.out.println("""
-                ===== OCEAN GRID =====
-                  A B C D E F G H I J
-                +-+-+-+-+-+-+-+-+-+-+""");
+               ===== OCEAN GRID =====
+                 A B C D E F G H I J
+               +-+-+-+-+-+-+-+-+-+-+""");
         positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
         positionY[] positionYarray = positionY.values();
 
@@ -58,7 +58,7 @@ public class board {
                         case HIT -> ToBePrinted.append("X|");
                         case MISSED -> ToBePrinted.append("o|");
                         case SUNK -> ToBePrinted.append("s|");
-                }
+                    }
                 else { //else it has not been guessed and can be:
                     printHelperShiptype(ToBePrinted, currentblock);
                 }
@@ -68,16 +68,16 @@ public class board {
             // row ends here
         }
         System.out.println("""
-                +-+-+-+-+-+-+-+-+-+-+
-                  A B C D E F G H I J
-                """);
+               +-+-+-+-+-+-+-+-+-+-+
+                 A B C D E F G H I J
+               """);
     }
 
     public void printEnemyBoard(){
         System.out.println("""
-                ===== TARGET GRID =====
-                  A B C D E F G H I J
-                +-+-+-+-+-+-+-+-+-+-+""");
+               ===== TARGET GRID =====
+                 A B C D E F G H I J
+               +-+-+-+-+-+-+-+-+-+-+""");
         positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
         positionY[] positionYarray = positionY.values();
 
@@ -85,12 +85,17 @@ public class board {
             StringBuilder ToBePrinted = new StringBuilder(ypos.ordinal() + "|"); //puts number of line to the left. Using ToBePrinted as a StringBuilder
             for (positionX xpos: positionXarray) {
                 block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
-                if (currentblock.getState() == blockstate.HIT) //if currentblock was hit, it can have the following types that should be shown
+                System.out.println(currentblock.getState());
+                if (currentblock.getState() == blockstate.SUNK) { //if currentblock was hit, it can have the following types that should be shown
                     printHelperShiptype(ToBePrinted, currentblock);
-                switch (currentblock.getState()) { //here, we only show these states.
-                    case NOGUESS -> ToBePrinted.append(" |");
-                    case MISSED -> ToBePrinted.append("o|");
-                    case SUNK -> ToBePrinted.append("s|");
+                }
+                else {
+                    switch (currentblock.getState()) { //here, we only show these states.
+                        case HIT -> ToBePrinted.append("X|");
+                        case NOGUESS -> ToBePrinted.append(" |");
+                        case MISSED -> ToBePrinted.append("o|");
+                        case SUNK -> ToBePrinted.append("s|");
+                    }
                 }
             }
             ToBePrinted.append(ypos.ordinal());
@@ -99,9 +104,9 @@ public class board {
 
         }
         System.out.println("""
-                +-+-+-+-+-+-+-+-+-+-+
-                  A B C D E F G H I J
-                """);
+               +-+-+-+-+-+-+-+-+-+-+
+                 A B C D E F G H I J
+               """);
 
     }
 
@@ -116,8 +121,8 @@ public class board {
     }
 
     /*
-    * gets called by input class and then sets up a new ship instance at the right blocks
-    */
+     * gets called by input class and then sets up a new ship instance at the right blocks
+     */
     public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
 
         //input validation is being made by the input class
