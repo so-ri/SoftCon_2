@@ -1,8 +1,8 @@
 package org.example.ships;
 
 public class coordinate {
-    private positionY CY;
-    private positionX CX;
+    private final positionY CY;
+    private final positionX CX;
     private state State;
 
     public coordinate(positionX v1, positionY v2, state v3){
@@ -12,13 +12,13 @@ public class coordinate {
     }
 
     public positionX getX(){
-        positionX PX = this.CX;
-        return PX;
+        //can be returned because its final 
+        return this.CX;
     }
 
     public positionY getY(){
-        positionY PY = this.CY;
-        return PY;
+        //can be returned because its final
+        return this.CY;
     }
 
     public void hit(){
