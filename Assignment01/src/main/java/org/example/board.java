@@ -123,7 +123,7 @@ public class board {
 
 
         if (ship.getShipType() == blockshiptype.EMPTY) {
-            throw new IllegalArgumentException("BLOCKSHIPTYPE IST EMPTY, VMTL STIMMT BLOCKSHIPTYPE NICHT");
+            throw new IllegalArgumentException("BLOCKSHIPTYPE IS EMPTY EVEN AFTER INITIALIZATION");
         }
 
         //assert ship.getShipType() != blockshiptype.EMPTY;

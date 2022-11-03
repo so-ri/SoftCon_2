@@ -4,9 +4,11 @@ import org.example.ships.positionX;
 import org.example.ships.positionY;
 import org.example.ships.ship;
 import static org.example.blockshiptype.EMPTY;
-import static org.example.blockstate.HIT;
 import static org.example.blockstate.NOGUESS;
 
+/*
+* block classes are being stored in the board class.
+* */
 public class block {
 
     /*
@@ -35,14 +37,13 @@ public class block {
         this.shiptype = EMPTY;
     }
 
-    //don't know if this is okay encapsulation-wise or better isEmpty()-checkers, but I think should be okay,
-    //isEmpty() etc. should come in the board class then
     public blockshiptype getShiptype() {
-        blockshiptype shiptypecopy = shiptype; //copy 
+        blockshiptype shiptypecopy = shiptype; //copy them to not give the calling class a chance to modify the values
         return shiptypecopy;
     }
 
     public void setShiptype(blockshiptype shiptype) {
+        assert (this.shiptype == EMPTY); //assertion to make sure a shiptype won't get changed after changing it from empty
         this.shiptype = shiptype;
     }
 
@@ -56,6 +57,7 @@ public class block {
     }
 
     public void setShiptoHit(positionX x, positionY y) {
+            assert(state == NOGUESS); //it can't be hit "twice"
             shipinstance.hitShip(x, y);
     }
 
@@ -65,6 +67,7 @@ public class block {
     }
 
     public void setShipinstance(ship shipinstance) {
+        assert (this.shipinstance == null); //assertion - shipinstance should not be set twice
         this.shipinstance = shipinstance;
     }
 }
