@@ -12,7 +12,7 @@ public class coordinate {
     }
 
     public positionX getX(){
-        //can be returned because its final 
+        //can be returned because its final
         return this.CX;
     }
 

@@ -12,6 +12,7 @@ public class Game {
     }
 
     public static synchronized Game getInstance() {
+        // 'synchronized' avoids two separate threads from creating two game instances
         if (uniqueInstance == null) {
             uniqueInstance = new Game();
         }
