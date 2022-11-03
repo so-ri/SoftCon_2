@@ -54,13 +54,13 @@ public class board {
             StringBuilder ToBePrinted = new StringBuilder(ypos.ordinal() + "|"); //puts number of line to the left. Using ToBePrinted as a StringBuilder
             for (positionX xpos: positionXarray) {
                 block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
-                if (currentblock.getState() != blockstate.NOGUESS) //if currentblock was not guessed yet, it can have the following types
+                if (currentblock.getState() != blockstate.NOGUESS) //if currentblock has been guessed, it can have the following types
                     switch (currentblock.getState()) {
                         case HIT -> ToBePrinted.append("X|");
                         case MISSED -> ToBePrinted.append("o|");
                         case SUNK -> ToBePrinted.append("s|");
                 }
-                else { //else it has been guessed and can be:
+                else { //else it has not been guessed and can be:
                     switch (currentblock.getShiptype()) {
                         case EMPTY -> ToBePrinted.append(" |");
                         case CARRIER -> ToBePrinted.append("C|");
@@ -92,12 +92,20 @@ public class board {
             StringBuilder ToBePrinted = new StringBuilder(ypos.ordinal() + "|"); //puts number of line to the left. Using ToBePrinted as a StringBuilder
             for (positionX xpos: positionXarray) {
                 block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
-                    switch (currentblock.getState()) { //here, we only show these states.
-                        case NOGUESS -> ToBePrinted.append(" |");
-                        case HIT -> ToBePrinted.append("X|");
-                        case MISSED -> ToBePrinted.append("o|");
-                        case SUNK -> ToBePrinted.append("s|");
+                if (currentblock.getState() == blockstate.HIT) //if currentblock was hit, it can have the following types that should be shown
+                    switch (currentblock.getShiptype()) {
+                        case EMPTY -> ToBePrinted.append(" |");
+                        case CARRIER -> ToBePrinted.append("C|");
+                        case BATTLESHIP -> ToBePrinted.append("B|");
+                        case PATROL -> ToBePrinted.append("P|");
+                        case SUBMARINE -> ToBePrinted.append("S|");
                     }
+                switch (currentblock.getState()) { //here, we only show these states.
+                    case NOGUESS -> ToBePrinted.append(" |");
+                    case MISSED -> ToBePrinted.append("o|");
+                    case SUNK -> ToBePrinted.append("s|");
+                }
+
             }
             ToBePrinted.append(ypos.ordinal());
             System.out.println(ToBePrinted);
@@ -136,8 +144,11 @@ public class board {
         }
     }
 
+    //PRE: block.getstate() == NOGUESS
     public void setGuess(positionX x, positionY y) {
         block block = blockarray[x.ordinal()][y.ordinal()]; //get the guessed block and then modify it
+        assert block.getState() == blockstate.NOGUESS; //assertion to check for precondition
+
         if (IsEmpty(x, y)) {
             block.setState(blockstate.MISSED);
             System.out.println("SHOT WAS MISSED");
@@ -160,7 +171,7 @@ public class board {
                 sunkcounter++;
             }
         }
-    }
+    } //POST: block.getstate != NOGUESS
 
     //BLOCKSTATE CHECKERS
     public boolean GotHit(positionX x, positionY y) {

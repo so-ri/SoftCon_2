@@ -52,7 +52,7 @@ public class block {
         block blockcopy = new block(this); //copy them to not give the calling class a chance to modify the values
         return blockcopy.shiptype;
     }
-
+    //PRE: was empty before we set a shiptype
     public void setShiptype(blockshiptype shiptype) {
         assert (this.shiptype == EMPTY); //assertion to make sure a shiptype won't get changed after changing it from empty
         this.shiptype = shiptype;
@@ -67,16 +67,16 @@ public class block {
         this.state = state;
     }
 
+    //PRE: was not hit before
     public void setShiptoHit(positionX x, positionY y) {
             assert(state == NOGUESS); //it can't be hit "twice"
             shipinstance.hitShip(x, y);
     }
-
     public ship getShipinstance() {
-        ship instancecopy = shipinstance;
-        return instancecopy;
+        block blockcopy = new block(this); //copy them to not give the calling class a chance to modify the values
+        return blockcopy.shipinstance;
     }
-
+    //PRE: was null before we set a shipinstance
     public void setShipinstance(ship shipinstance) {
         assert (this.shipinstance == null); //assertion - shipinstance should not be set twice
         this.shipinstance = shipinstance;
