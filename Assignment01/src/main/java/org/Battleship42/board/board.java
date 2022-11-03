@@ -1,8 +1,7 @@
-package org.Battleship42;
+package org.Battleship42.board;
 import org.Battleship42.ships.ship;
-import org.Battleship42.ships.positionX;
-import org.Battleship42.ships.positionY;
-
+import org.Battleship42.coordinates.positionX;
+import org.Battleship42.coordinates.positionY;
 import java.util.Objects;
 
 public class board {

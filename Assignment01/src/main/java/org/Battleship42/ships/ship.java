@@ -1,6 +1,8 @@
 package org.Battleship42.ships;
 import java.lang.*;
-import org.Battleship42.blockshiptype;
+import org.Battleship42.board.blockshiptype;
+import org.Battleship42.coordinates.positionX;
+import org.Battleship42.coordinates.positionY;
 
 public class ship {
 

@@ -1,5 +1,8 @@
 package org.Battleship42.ships;
 
+import org.Battleship42.coordinates.positionX;
+import org.Battleship42.coordinates.positionY;
+
 /*
 * helps the ship class to store its coordinates and takes shiphits
 * */

@@ -2,8 +2,9 @@ package org.Battleship42.gameflow;
 
 import java.util.Random;
 import java.util.Scanner;
-import org.Battleship42.ships.positionX;
-import org.Battleship42.ships.positionY;
+import org.Battleship42.coordinates.positionX;
+import org.Battleship42.coordinates.positionY;
+import org.Battleship42.board.board;
 
 public class Guess {
 

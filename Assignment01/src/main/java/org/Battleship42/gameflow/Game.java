@@ -1,5 +1,6 @@
 package org.Battleship42.gameflow;
 import org.Battleship42.printlogo;
+import org.Battleship42.board.board;
 
 import java.util.Random;
 

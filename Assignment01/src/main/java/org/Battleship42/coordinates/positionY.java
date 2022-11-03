@@ -1,4 +1,4 @@
-package org.Battleship42.ships;
+package org.Battleship42.coordinates;
 
 public enum positionY {
     ZERO,
