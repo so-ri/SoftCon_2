@@ -1,6 +1,5 @@
 package org.example;
 import org.example.ships.ship;
-
 import org.example.ships.positionX;
 import org.example.ships.positionY;
 
@@ -13,7 +12,7 @@ public class board {
      * CARRIER,
      * *BATTLESHIP,
      * *PATROL,
-     * *SUBMARINE,
+     * *SUBMARINE
      *
      * possible types for blockstate:
      * NOGUESS,
@@ -24,86 +23,104 @@ public class board {
      * */
 
     private byte sunkcounter = 0;
-    private block[][] blockarray = new block[10][10];
+    private final block[][] blockarray = new block[10][10];
     public board(){
         positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
         positionY[] positionYarray = positionY.values();
 
         for (positionX xpos: positionXarray) { //iterate through enum objects
             for (positionY ypos: positionYarray) {
-                blockarray[xpos.ordinal()][ypos.ordinal()] = new block();
+                blockarray[xpos.ordinal()][ypos.ordinal()] = new block(); //initiate new block
             }
         }
     }
 
-    public void printOwnBoard() {
-        System.out.println("===== OCEAN GRID =====\n" + "  A B C D E F G H I J\n" + "+-+-+-+-+-+-+-+-+-+-+");
-        positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
-        positionY[] positionYarray = positionY.values();
-
-        for (positionY ypos: positionYarray) { //iterate through enum objects, BUT THE Y WAY - horizontally
-            String ToBePrinted = ypos.ordinal() + "|"; //Prints number of line to the left
-            for (positionX xpos: positionXarray) {
-                block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
-                if (currentblock.getState() != blockstate.NOGUESS)
-                    switch (currentblock.getState()) {
-                        case HIT -> ToBePrinted += "X|";
-                        case MISSED -> ToBePrinted += "o|";
-                        case SUNK -> ToBePrinted += "s|";
-                }
-                else {
-                    switch (currentblock.getShiptype()) {
-                        case EMPTY -> ToBePrinted += " |";
-                        case CARRIER -> ToBePrinted += "C|";
-                        case BATTLESHIP -> ToBePrinted += "B|";
-                        case PATROL -> ToBePrinted += "P|";
-                        case SUBMARINE -> ToBePrinted += "S|";
-                    }
-                }
-            }
-            ToBePrinted += ypos.ordinal();
-            System.out.println(ToBePrinted);
-            // "line" ends
-
-        }
-        System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "  A B C D E F G H I J\n");
-    }
-
-    public void printEnemyBoard(){
-        System.out.println("===== TARGET GRID =====\n" + "  A B C D E F G H I J\n" + "+-+-+-+-+-+-+-+-+-+-+");
-        positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
-        positionY[] positionYarray = positionY.values();
-
-        for (positionY ypos: positionYarray) { //iterate through enum objects, BUT THE Y WAY - horizontally
-            String ToBePrinted = ypos.ordinal() + "|"; //Prints number of line to the left
-            for (positionX xpos: positionXarray) {
-                block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
-                    switch (currentblock.getState()) {
-                        case NOGUESS -> ToBePrinted += " |";
-                        case HIT -> ToBePrinted += "X|";
-                        case MISSED -> ToBePrinted += "o|";
-                        case SUNK -> ToBePrinted += "s|";
-                    }
-
-            }
-            ToBePrinted += ypos.ordinal();
-            System.out.println(ToBePrinted);
-            // "line" ends
-
-        }
-        System.out.println("+-+-+-+-+-+-+-+-+-+-+\n" + "  A B C D E F G H I J\n");
-
-    }
-
+    // can be called to determine if all 10 ships have been sunk (and game is finished)
     public boolean IsGameOver() {
         return sunkcounter >= 10;
     }
+    /*
+    * two print methods for either showing the board for the player or the one the enemy sees
+    */
+    public void printOwnBoard() {
+        System.out.println("""
+                ===== OCEAN GRID =====
+                  A B C D E F G H I J
+                +-+-+-+-+-+-+-+-+-+-+""");
+        positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
+        positionY[] positionYarray = positionY.values();
 
+        for (positionY ypos: positionYarray) { //iterate through enum objects, row by row (first y)
+            StringBuilder ToBePrinted = new StringBuilder(ypos.ordinal() + "|"); //puts number of line to the left. Using ToBePrinted as a StringBuilder
+            for (positionX xpos: positionXarray) {
+                block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
+                if (currentblock.getState() != blockstate.NOGUESS) //if currentblock was not guessed yet, it can have the following types
+                    switch (currentblock.getState()) {
+                        case HIT -> ToBePrinted.append("X|");
+                        case MISSED -> ToBePrinted.append("o|");
+                        case SUNK -> ToBePrinted.append("s|");
+                }
+                else { //else it has been guessed and can be:
+                    switch (currentblock.getShiptype()) {
+                        case EMPTY -> ToBePrinted.append(" |");
+                        case CARRIER -> ToBePrinted.append("C|");
+                        case BATTLESHIP -> ToBePrinted.append("B|");
+                        case PATROL -> ToBePrinted.append("P|");
+                        case SUBMARINE -> ToBePrinted.append("S|");
+                    }
+                }
+            }
+            ToBePrinted.append(ypos.ordinal()); //adds number of line at the end of the row
+            System.out.println(ToBePrinted);
+            // row ends here
+        }
+        System.out.println("""
+                +-+-+-+-+-+-+-+-+-+-+
+                  A B C D E F G H I J
+                """);
+    }
+
+    public void printEnemyBoard(){
+        System.out.println("""
+                ===== TARGET GRID =====
+                  A B C D E F G H I J
+                +-+-+-+-+-+-+-+-+-+-+""");
+        positionX[] positionXarray = positionX.values(); //helper array of values of enum object to iterate through it
+        positionY[] positionYarray = positionY.values();
+
+        for (positionY ypos: positionYarray) { //iterate through enum objects, row by row (first y)
+            StringBuilder ToBePrinted = new StringBuilder(ypos.ordinal() + "|"); //puts number of line to the left. Using ToBePrinted as a StringBuilder
+            for (positionX xpos: positionXarray) {
+                block currentblock = blockarray[xpos.ordinal()][ypos.ordinal()];
+                    switch (currentblock.getState()) { //here, we only show these states.
+                        case NOGUESS -> ToBePrinted.append(" |");
+                        case HIT -> ToBePrinted.append("X|");
+                        case MISSED -> ToBePrinted.append("o|");
+                        case SUNK -> ToBePrinted.append("s|");
+                    }
+            }
+            ToBePrinted.append(ypos.ordinal());
+            System.out.println(ToBePrinted);
+            // row ends here
+
+        }
+        System.out.println("""
+                +-+-+-+-+-+-+-+-+-+-+
+                  A B C D E F G H I J
+                """);
+
+    }
+
+    /*
+    * gets called by input class and then sets up a new ship instance at the right blocks
+    */
     public void createShip(positionX x, positionY y, positionX x2, positionY y2) {
 
+        //input validation is being made by the input class
         ship ship = new ship(x,y,x2,y2);
         positionX[] xcoordinates = ship.getXcoordinates();
         positionY[] ycoordinates = ship.getYcoordinates();
+
 
         if (ship.getShipType() == blockshiptype.EMPTY) {
             throw new IllegalArgumentException("BLOCKSHIPTYPE IST EMPTY, VMTL STIMMT BLOCKSHIPTYPE NICHT");
@@ -120,7 +137,7 @@ public class board {
     }
 
     public void setGuess(positionX x, positionY y) {
-        block block = blockarray[x.ordinal()][y.ordinal()];
+        block block = blockarray[x.ordinal()][y.ordinal()]; //get the guessed block and then modify it
         if (IsEmpty(x, y)) {
             block.setState(blockstate.MISSED);
             System.out.println("SHOT WAS MISSED");
@@ -145,62 +162,14 @@ public class board {
         }
     }
 
-
-    //BLOCK MODIFIERS
-    public void setState(positionX x, positionY y, blockstate bs) {
-        block block = blockarray[x.ordinal()][y.ordinal()];
-        block.setState(bs);
-    }
-    public void setShipType(positionX x, positionY y, blockshiptype bst) {
-        block block = blockarray[x.ordinal()][y.ordinal()];
-        block.setShiptype(bst);
-    }
-    //! ShipInstance - is it safe to store it in f.e. 3 blocks at the same time?
-    public void setShipInstance(positionX x, positionY y, ship s) {
-        block block = blockarray[x.ordinal()][y.ordinal()];
-        System.out.println(this.IsEmpty(x, y));
-        if (this.IsEmpty(x, y) == false) {
-            throw new IllegalArgumentException("Schiffsinstanz wurde bereits gesetzt");
-        }
-        block.setShipinstance(s);
-    }
-
     //BLOCKSTATE CHECKERS
-    public boolean GotGuessed(positionX x, positionY y) {
-        return !Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.NOGUESS); //returns true if it has been guessed
-    }
-
     public boolean GotHit(positionX x, positionY y) {
         return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.HIT); //returns true if it has been hit
-    }
-
-    public boolean GotMissed(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.MISSED); //returns true if it has been missed
     }
     public boolean GotSunk(positionX x, positionY y) {
         return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.SUNK); //returns true if it has been sunk
     }
-
-    //SHIPTYPE CHECKERS
     public boolean IsEmpty(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.EMPTY); //returns true if == EMPTY, returns false if != EMPTY
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.EMPTY); //returns true if == EMPTY
     }
-
-    public boolean IsCarrier(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.CARRIER);
-    }
-
-    public boolean IsBattleship(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.BATTLESHIP);
-    }
-
-    public boolean IsPatrol(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.PATROL);
-    }
-
-    public boolean IsSubmarine(positionX x, positionY y) {
-        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getShiptype(), blockshiptype.SUBMARINE);
-    }
-
-
 }
