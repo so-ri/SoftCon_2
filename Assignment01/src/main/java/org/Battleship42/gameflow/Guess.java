@@ -5,19 +5,20 @@ import java.util.Scanner;
 import org.Battleship42.coordinates.positionX;
 import org.Battleship42.coordinates.positionY;
 import org.Battleship42.board.board;
+import org.Battleship42.gameflow.Input;
 
 public class Guess {
 
     //Takes a guess input from user and verifies it
     //PRE: must be an empty position on the board
     public static void PlayerGuess(board playerBoard) {
-        Scanner Input = new Scanner(System.in);
+        Scanner UserInput = new Scanner(System.in);
         String answer = null;
         boolean i = true;
         System.out.println("Type in new Guess: ");
 
         while (i) {
-            String pos2 = Input.nextLine();
+            String pos2 = UserInput.nextLine();
 
             //adjusts typed in position
             String pos1 = pos2.replaceAll("\\s+", "");
@@ -26,8 +27,7 @@ public class Guess {
             //Checks if valid input according to PRE-condition
             if (pos.length() != 2) {
                 System.out.println("Please type in a Position on the Board");
-            } else if ((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
-                    || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
+            } else if (!Input.onBoard(pos)) {
                 System.out.println("Please type in a Position on the Board");
             } else if (!ValidShot(pos, playerBoard)) {
                 System.out.println("Invalid Input: Position has already been guessed!");
@@ -43,30 +43,6 @@ public class Guess {
         positionY y1 = translateY(answer);
         playerBoard.setGuess(x1, y1, "Player Guess: ");
     }
-
-    //translates the alphabetic part of String position to enum
-    public static positionX translateX(String min) {
-        int C1 = (int) min.charAt(0) - 65;
-        positionX[] V1 = positionX.values();
-        return V1[C1];
-    }
-
-    //translates the numeric part of String position to enum
-    public static positionY translateY(String min) {
-        int C2 = Character.getNumericValue(min.charAt(1));
-        positionY[] V2 = positionY.values();
-        return V2[C2];
-    }
-
-    //Validates a given guess
-    public static boolean ValidShot(String pos, board shotboard) {
-        positionX x3 = translateX(pos);
-        positionY y3 = translateY(pos);
-
-        //Checks whether block has already been hit
-        return shotboard.WasNotGuessed(x3, y3);
-    }
-
 
     //Generates a random guess
     public static void ComputerGuess(board Cboard) {
@@ -91,6 +67,34 @@ public class Guess {
         positionY y2 = translateY(Canswer);
         Cboard.setGuess(x2, y2, "Computer Guess: ");
     }
+
+    //Validates a given guess
+    public static boolean ValidShot(String pos, board shotboard) {
+        positionX x3 = translateX(pos);
+        positionY y3 = translateY(pos);
+
+        //Checks whether block has already been hit
+        return shotboard.WasNotGuessed(x3, y3);
+    }
+
+    //translates the alphabetic part of String position to enum
+    public static positionX translateX(String min) {
+        int C1 = (int) min.charAt(0) - 65;
+        positionX[] V1 = positionX.values();
+        return V1[C1];
+    }
+
+    //translates the numeric part of String position to enum
+    public static positionY translateY(String min) {
+        int C2 = Character.getNumericValue(min.charAt(1));
+        positionY[] V2 = positionY.values();
+        return V2[C2];
+    }
+
+
+
+
+
 }
 		
 

@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.Random;
 import org.Battleship42.coordinates.positionX;
 import org.Battleship42.coordinates.positionY;
-import org.Battleship42.ships.*;
+import org.Battleship42.ships.ship;
 import org.Battleship42.board.board;
 
 
@@ -50,6 +50,7 @@ public class Input {
             }
         }
     }
+
     //Generates random ships for the computer
     public static void ScanComputerShips(board Computerboard) {
         Random rnd = new Random();
@@ -71,8 +72,8 @@ public class Input {
                 len = isRightShip(ship);
 
                 //random number to decide whether ship will be vertical or horizontal
-                int dir = rnd.nextInt(2);
-                if (dir == 0) {
+                boolean dir = rnd.nextBoolean();
+                if (dir) {
                     F1 = (char) ((int) P1 + len - 1);
                     pos2 = F1 + Character.toString(P2);
                 } else {
@@ -90,14 +91,53 @@ public class Input {
         ComputerIsScanning = false;
     }
 
-    //Checks if a given input position is on the board
-    public static boolean onBoard(String pos) {
-        return (int) pos.charAt(0) >= 65 && (int) pos.charAt(0) <= 74
-                && (int) pos.charAt(1) >= 48 && (int) pos.charAt(1) <= 57;
+
+
+
+
+    //Takes and verifies user input
+    private static String Shipscan(String msg, board Board1) {
+        Scanner Input = new Scanner(System.in);
+        String answer = null;
+        boolean i = true;
+        System.out.println(msg);
+
+        //Checks if valid input according to game rules
+        while(i) {
+            String pos2 = Input.nextLine();
+            String pos1 = pos2.replaceAll("\\s+","");
+            String pos = pos1.toUpperCase();
+
+            String sub1 = pos.substring(0,2);
+            String sub2 = pos.substring(3);
+            if(!pos.contains(",")) {
+                System.out.println("Positions need to be seperated by a comma");
+            }
+            else if(pos.length()!=5) {
+                System.out.println("Invalid input");
+            }
+            else if(!onBoard(sub1)) {
+                System.out.println(sub1 + " is not on the board, type in valid positions");
+            }
+            else if(!onBoard(sub2)) {
+                System.out.println(sub2 + " is not on the board, type in valid positions");
+            }
+            else if(!(Guess.ValidShot(sub1, Board1))) {
+                System.out.println(sub1 + "is not a valid position");
+            }
+            else if(!(Guess.ValidShot(sub2, Board1))) {
+                System.out.println(sub2 + "is not a valid position");
+            }
+            else {
+                i = false;
+                answer = pos;
+            }
+        }
+        return answer;
     }
 
     //creates ship
-    public static void createShip(String c1, String c2, board shipboard){
+    private static void createShip(String c1, String c2, board shipboard){
         if(!ComputerIsScanning) System.out.println("Ship created from: " + c1 + " to " + c2);
 
         //converts string positions into enum
@@ -107,11 +147,10 @@ public class Input {
         positionY y2 = Guess.translateY(c2);
 
         shipboard.createShip(x1,y1,x2,y2);
-
     }
 
     //Validates Ship
-    public static boolean isValidShip(String pos1, String pos2, String typus, board board2){
+    private static boolean isValidShip(String pos1, String pos2, String typus, board board2){
         char[] Spos = pos1.toCharArray();
         char[] Epos = pos2.toCharArray();
 
@@ -122,7 +161,7 @@ public class Input {
         }
         if(getlen(Spos,Epos) != isRightShip(typus)) {
             if(!ComputerIsScanning) System.out.println("Ship doesnt have proper length, " + typus
-            + " must be of length " + isRightShip(typus));
+                    + " must be of length " + isRightShip(typus));
             return false;
         }
 
@@ -147,44 +186,10 @@ public class Input {
         return true;
     }
 
-    //Takes and verifies user input
-    public static String Shipscan(String msg, board Board1) {
-        Scanner Input = new Scanner(System.in);
-        String answer = null;
-        boolean i = true;
-        System.out.println(msg);
-
-        //Checks if valid input according to game rules
-        while(i) {
-            String pos2 = Input.nextLine();
-            String pos1 = pos2.replaceAll("\\s+","");
-            String pos = pos1.toUpperCase();
-            if(!pos.contains(",")) {
-                System.out.println("Positions need to be seperated by a comma");
-            }
-            else if(pos.length()!=5) {
-                System.out.println("Invalid input");
-            }
-            else if((int) pos.charAt(0) < 65 || (int) pos.charAt(0) > 74
-                    || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
-                System.out.println(pos.substring(0,2) + " is not on the board, type in valid positions");
-            }
-            else if((int) pos.charAt(3) < 65 || (int) pos.charAt(3) > 74
-                    || (int) pos.charAt(4) < 48 || (int) pos.charAt(4) > 57) {
-                System.out.println(pos.substring(3) + " is not on the board, type in valid positions");
-            }
-            else if(!(Guess.ValidShot(pos.substring(0,2), Board1))) {
-                System.out.println(pos.substring(0,2) + "is not a valid shot");
-            }
-            else if(!(Guess.ValidShot(pos.substring(3), Board1))) {
-                System.out.println(pos.substring(3) + "is not a valid shot");
-            }
-            else {
-                i = false;
-                answer = pos;
-            }
-        }
-        return answer;
+    //Checks if a given input position is on the board
+    public static boolean onBoard(String pos) {
+        return (int) pos.charAt(0) >= 65 && (int) pos.charAt(0) <= 74
+                && (int) pos.charAt(1) >= 48 && (int) pos.charAt(1) <= 57;
     }
 
     //Returns distance between two positions (horizontally or vertically)
