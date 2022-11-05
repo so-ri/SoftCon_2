@@ -174,6 +174,10 @@ public class board {
     } //POST: block.getstate != NOGUESS
 
     //BLOCKSTATE CHECKERS
+
+    public boolean WasNotGuessed(positionX x, positionY y) {
+        return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.NOGUESS); //returns true if it has NOT been guessed yet
+    }
     public boolean GotHit(positionX x, positionY y) {
         return Objects.equals(blockarray[x.ordinal()][y.ordinal()].getState(), blockstate.HIT); //returns true if it has been hit
     }
