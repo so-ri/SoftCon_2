@@ -30,7 +30,7 @@ public class Guess {
                     || (int) pos.charAt(1) < 48 || (int) pos.charAt(1) > 57) {
                 System.out.println("Please type in a Position on the Board");
             } else if (!ValidShot(pos, playerBoard)) {
-                System.out.println("Please type in a valid Position");
+                System.out.println("Invalid Input: Position has already been guessed!");
 
             } else {
                 i = false;
@@ -64,7 +64,7 @@ public class Guess {
         positionY y3 = translateY(pos);
 
         //Checks whether block has already been hit
-        return !shotboard.GotSunk(x3, y3) && !shotboard.GotHit(x3, y3);
+        return shotboard.WasNotGuessed(x3, y3);
     }
 
 
